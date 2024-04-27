@@ -4,18 +4,18 @@
 -- DROP TABLE commands:
 -- SQL script to drop tables from a MySQL database
 
-DROP TABLE IF EXISTS ReportDocuments;
-DROP TABLE IF EXISTS FinancialDocs;
-DROP TABLE IF EXISTS Agreements;
-DROP TABLE IF EXISTS Investments;
-DROP TABLE IF EXISTS Fundraises;
-DROP TABLE IF EXISTS LPs;
-DROP TABLE IF EXISTS Funds;
-DROP TABLE IF EXISTS Companies;
+DROP TABLE IF EXISTS report_docs;
+DROP TABLE IF EXISTS financial_docs;
+DROP TABLE IF EXISTS agreements;
+DROP TABLE IF EXISTS investments;
+DROP TABLE IF EXISTS fundraises;
+DROP TABLE IF EXISTS lps;
+DROP TABLE IF EXISTS funds;
+DROP TABLE IF EXISTS companies;
 
 -- SQL script to create tables for a MySQL database
 -- Creating the 'Companies' table
-CREATE TABLE Companies (
+CREATE TABLE companies (
     CompanyID INT AUTO_INCREMENT PRIMARY KEY,
     CompanyName VARCHAR(255) NOT NULL,
     Industry VARCHAR(100),
@@ -25,7 +25,7 @@ CREATE TABLE Companies (
 );
 
 -- Creating the 'Funds' table
-CREATE TABLE Funds (
+CREATE TABLE funds (
     FundID INT AUTO_INCREMENT PRIMARY KEY,
     FundName VARCHAR(255) NOT NULL,
     FundSize BIGINT,
@@ -36,7 +36,7 @@ CREATE TABLE Funds (
 );
 
 -- Creating the 'LPs' table
-CREATE TABLE LPs (
+CREATE TABLE lps (
     LPID INT AUTO_INCREMENT PRIMARY KEY,
     LPName VARCHAR(255) NOT NULL,
     Location VARCHAR(255),
@@ -44,7 +44,7 @@ CREATE TABLE LPs (
 );
 
 -- Creating the 'Fundraises' table
-CREATE TABLE Fundraises (
+CREATE TABLE fundraises (
     FundraiseID INT AUTO_INCREMENT PRIMARY KEY,
     LPID INT,
     FundID INT,
@@ -55,7 +55,7 @@ CREATE TABLE Fundraises (
 );
 
 -- Creating the 'Investments' table
-CREATE TABLE Investments (
+CREATE TABLE investments (
     InvestmentID INT AUTO_INCREMENT PRIMARY KEY,
     CompanyID INT,
     Type VARCHAR(100),
@@ -68,7 +68,7 @@ CREATE TABLE Investments (
 );
 
 -- Creating the 'Agreements' table
-CREATE TABLE Agreements (
+CREATE TABLE agreements (
     AgreementID INT AUTO_INCREMENT PRIMARY KEY,
     CompanyID INT,
     DocumentPath VARCHAR(255) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE Agreements (
 );
 
 -- Creating the 'FinancialDocs' table
-CREATE TABLE FinancialDocs (
+CREATE TABLE financial_docs (
     FinancialDocsID INT AUTO_INCREMENT PRIMARY KEY,
     CompanyID INT,
     DocumentPath VARCHAR(255) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE FinancialDocs (
 );
 
 -- Creating the 'ReportDocuments' table
-CREATE TABLE ReportDocuments (
+CREATE TABLE report_docs (
     ReportDocID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
     DocumentPath VARCHAR(255) NOT NULL,
