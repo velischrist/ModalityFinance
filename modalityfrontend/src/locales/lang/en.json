@@ -1,0 +1,27 @@
+{
+    "nav": {
+        "home": "My Portfolio",
+        "lps": "LPs",
+        "collapseMenu": {
+            "collapseMenu": "Collapse menu item",
+            "item1": "Collapse menu item 1",
+            "item2": "Collapse menu item 2"
+        },
+        "groupMenu": {
+            "groupMenu": "Performance",
+            "reporting": "Reporting",
+            "automations": "Automations"
+        },
+        "groupMenu2": {
+            "groupMenu": "Intelligence",
+            "virtualanalyst": "Virtual Analyst"
+        },
+        "groupMenu3": {
+            "groupMenu": "Settings",
+            "collapse": {
+                "organizationsettings": "Organization Settings",
+                "accountsettings": "Account settings"
+            }
+        }
+    }
+}
