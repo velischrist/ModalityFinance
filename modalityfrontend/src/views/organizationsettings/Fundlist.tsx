@@ -91,9 +91,12 @@ const Filtering = () => {
 
     const columns = useMemo<ColumnDef<Funds>[]>(
         () => [
-            { header: 'Fund Name', accessorKey: 'Fund_name' },
-            { header: 'Total Invested', accessorKey: 'total_invested' },
-            { header: 'Positions', accessorKey: 'positions' },
+            { header: 'Fund Name', accessorKey: 'fund_name' },
+            { header: 'Fund Size', accessorKey: 'fund_size' },
+            { header: 'Fund Type', accessorKey: 'fund_type' },
+            { header: 'Fund Status', accessorKey: 'fund_status' },
+            { header: 'Started At', accessorKey: 'started_at' },
+            { header: 'Investments', accessorKey: 'investments' },
         ],
         [],
     )
