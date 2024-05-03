@@ -6,13 +6,12 @@ import {
 import type { TableQueries } from '@/@types/common'
 
 type Company = {
-    id: string
-    name: string
-    companyCode: string
-    img: string
-    category: string
-    price: number
-    stock: number
+    id: number
+    companyName: string
+    // status: string
+    industry: string
+    investedAt: string
+    amountInvested: number
     status: number
 }
 
@@ -24,10 +23,9 @@ type GetSalesCompaniesResponse = {
 }
 
 type FilterQueries = {
-    name: string
-    category: string[]
+    companyName: string
+    industry: string[]
     status: number[]
-    companyStatus: number
 }
 
 export type SalesCompanyListState = {
@@ -80,10 +78,9 @@ const initialState: SalesCompanyListState = {
     companyList: [],
     tableData: initialTableData,
     filterData: {
-        name: '',
-        category: ['bags', 'cloths', 'devices', 'shoes', 'watches'],
+        companyName: '',
+        industry: ['Technology', 'Healthcare', 'Services', 'Travel', 'Banking'],
         status: [0, 1, 2],
-        companyStatus: 0,
     },
 }
 

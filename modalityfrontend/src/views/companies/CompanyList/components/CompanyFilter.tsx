@@ -17,10 +17,11 @@ import { Field, Form, Formik, FormikProps, FieldProps } from 'formik'
 import type { MouseEvent } from 'react'
 
 type FormModel = {
-    name: string
-    category: string[]
-    status: number[]
-    companyStatus: number
+    companyName: string
+    // status: string
+    industry: string
+
+    status: number
 }
 
 type FilterFormProps = {
@@ -59,8 +60,10 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                     <Form>
                         <FormContainer>
                             <FormItem
-                                invalid={errors.name && touched.name}
-                                errorMessage={errors.name}
+                                invalid={
+                                    errors.companyName && touched.companyName
+                                }
+                                errorMessage={errors.companyName}
                             >
                                 <h6 className="mb-4">Included text</h6>
                                 <Field
@@ -75,16 +78,16 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 />
                             </FormItem>
                             <FormItem
-                                invalid={errors.category && touched.category}
-                                errorMessage={errors.category as string}
+                                invalid={errors.stt && touched.industry}
+                                errorMessage={errors.industry as string}
                             >
-                                <h6 className="mb-4">Company Category</h6>
-                                <Field name="category">
+                                <h6 className="mb-4">Company industry</h6>
+                                <Field name="industry">
                                     {({ field, form }: FieldProps) => (
                                         <>
                                             <Checkbox.Group
                                                 vertical
-                                                value={values.category}
+                                                value={values.industry}
                                                 onChange={(options) =>
                                                     form.setFieldValue(
                                                         field.name,
@@ -95,99 +98,53 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                 <Checkbox
                                                     className="mb-3"
                                                     name={field.name}
-                                                    value="bags"
+                                                    value="Technology"
                                                 >
                                                     Bags{' '}
                                                 </Checkbox>
                                                 <Checkbox
                                                     className="mb-3"
                                                     name={field.name}
-                                                    value="cloths"
+                                                    value="Healthcare"
                                                 >
-                                                    Cloths{' '}
+                                                    Healthcare{' '}
                                                 </Checkbox>
                                                 <Checkbox
                                                     className="mb-3"
                                                     name={field.name}
-                                                    value="devices"
+                                                    value="Services"
                                                 >
-                                                    Devices{' '}
+                                                    Services{' '}
                                                 </Checkbox>
                                                 <Checkbox
                                                     className="mb-3"
                                                     name={field.name}
-                                                    value="shoes"
+                                                    value="Travel"
                                                 >
-                                                    Shoes{' '}
+                                                    Travel{' '}
                                                 </Checkbox>
                                                 <Checkbox
                                                     name={field.name}
-                                                    value="watches"
+                                                    value="Banking"
                                                 >
-                                                    Watches{' '}
+                                                    Banking{' '}
                                                 </Checkbox>
                                             </Checkbox.Group>
                                         </>
                                     )}
                                 </Field>
                             </FormItem>
+
                             <FormItem
                                 invalid={errors.status && touched.status}
-                                errorMessage={errors.status as string}
-                            >
-                                <h6 className="mb-4">Company Category</h6>
-                                <Field name="status">
-                                    {({ field, form }: FieldProps) => (
-                                        <>
-                                            <Checkbox.Group
-                                                vertical
-                                                value={values.status}
-                                                onChange={(options) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        options,
-                                                    )
-                                                }
-                                            >
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value={0}
-                                                >
-                                                    In Stock{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value={1}
-                                                >
-                                                    Limited{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value={2}
-                                                >
-                                                    Out Of Stock{' '}
-                                                </Checkbox>
-                                            </Checkbox.Group>
-                                        </>
-                                    )}
-                                </Field>
-                            </FormItem>
-                            <FormItem
-                                invalid={
-                                    errors.companyStatus &&
-                                    touched.companyStatus
-                                }
-                                errorMessage={errors.companyStatus}
+                                errorMessage={errors.status}
                             >
                                 <h6 className="mb-4">Company Status</h6>
-                                <Field name="companyStatus">
+                                <Field name="status">
                                     {({ field, form }: FieldProps) => (
                                         <Radio.Group
                                             vertical
-                                            value={values.companyStatus}
+                                            value={values.status}
                                             onChange={(val) =>
                                                 form.setFieldValue(
                                                     field.name,
@@ -195,9 +152,9 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                 )
                                             }
                                         >
-                                            <Radio value={0}>Published</Radio>
-                                            <Radio value={1}>Disabled</Radio>
-                                            <Radio value={2}>Archive</Radio>
+                                            <Radio value={0}>Open</Radio>
+                                            <Radio value={1}>Closed</Radio>
+                                            <Radio value={2}>Prospect</Radio>
                                         </Radio.Group>
                                     )}
                                 </Field>

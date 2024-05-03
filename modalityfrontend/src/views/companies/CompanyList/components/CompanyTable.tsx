@@ -23,13 +23,12 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Company = {
-    id: string
-    name: string
-    companyCode: string
-    img: string
-    category: string
-    price: number
-    stock: number
+    id: number
+    companyName: string
+    // status: string
+    industry: string
+    investedAt: string
+    amountInvested: number
     status: number
 }
 
@@ -91,16 +90,18 @@ const ActionColumn = ({ row }: { row: Company }) => {
 }
 
 const CompanyColumn = ({ row }: { row: Company }) => {
-    const avatar = row.img ? (
-        <Avatar src={row.img} />
-    ) : (
-        <Avatar icon={<FiPackage />} />
-    )
+    // const avatar = row.img ? (
+    //     <Avatar src={row.img} />
+    // ) : (
+    //     <Avatar icon={<FiPackage />} />
+    // )
 
     return (
         <div className="flex items-center">
-            {avatar}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>{row.name}</span>
+            {/* {avatar} */}
+            <span className={`ml-2 rtl:mr-2 font-semibold`}>
+                {row.companyName}
+            </span>
         </div>
     )
 }
@@ -149,25 +150,12 @@ const CompanyTable = () => {
     const columns: ColumnDef<Company>[] = useMemo(
         () => [
             {
-                header: 'Name',
-                accessorKey: 'name',
+                header: 'Company Name',
+                accessorKey: 'companyName',
                 cell: (props) => {
                     const row = props.row.original
                     return <CompanyColumn row={row} />
                 },
-            },
-            {
-                header: 'Category',
-                accessorKey: 'category',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.category}</span>
-                },
-            },
-            {
-                header: 'Quantity',
-                accessorKey: 'stock',
-                sortable: true,
             },
             {
                 header: 'Status',
@@ -191,11 +179,28 @@ const CompanyTable = () => {
                 },
             },
             {
-                header: 'Price',
-                accessorKey: 'price',
+                header: 'Industry',
+                accessorKey: 'industry',
                 cell: (props) => {
-                    const { price } = props.row.original
-                    return <span>${price}</span>
+                    const row = props.row.original
+                    return <span className="capitalize">{row.industry}</span>
+                },
+            },
+            {
+                header: 'Invested At',
+                accessorKey: 'investedAt',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span className="capitalize">{row.investedAt}</span>
+                },
+            },
+
+            {
+                header: 'Amount Invested',
+                accessorKey: 'amountInvested',
+                cell: (props) => {
+                    const { amountInvested } = props.row.original
+                    return <span>${amountInvested}</span>
                 },
             },
             {
