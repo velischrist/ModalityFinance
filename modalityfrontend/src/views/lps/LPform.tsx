@@ -15,16 +15,8 @@ type Option = {
 
 type FormModel = {
     lpname: string
-    select: string
-    LPTypes: string[]
-    date: Date | null
-    time: Date | null
-    singleCheckbox: boolean
-    multipleCheckbox: Array<string | number>
-    radio: string
-    switcher: boolean
-    segment: string[]
-    upload: File[]
+    location: string
+    LPTypes: string
 }
 
 interface LPFormControlProps {
@@ -39,17 +31,9 @@ const options: Option[] = [
 const validationSchema = Yup.object().shape({
     lpname: Yup.string()
         .min(3, 'Too Short!')
-        .max(20, 'Too Long!')
         .required('Please input user name!'),
-    select: Yup.string().required('Please select one!'),
-    LPTypes: Yup.array().min(1, 'At least one is selected!'),
-    date: Yup.date().required('Date Required!').nullable(),
-    time: Yup.date().required('Time Required!').nullable(),
-    singleCheckbox: Yup.boolean().oneOf([true], 'You must tick this!'),
-    multipleCheckbox: Yup.array().min(1, 'Select at least one option!'),
-    radio: Yup.string().required('Please select one!'),
-    switcher: Yup.boolean().oneOf([true], 'You must turn this on!'),
-    segment: Yup.array().min(1, 'Select at least one option!'),
+    location: Yup.string().required('Please input location!'),
+    LPTypes: Yup.string().required('Please select one!')
 })
 
 const LPFormControl = ({ onCloseDialog }: LPFormControlProps) => {
@@ -59,25 +43,40 @@ const LPFormControl = ({ onCloseDialog }: LPFormControlProps) => {
                 enableReinitialize
                 initialValues={{
                     lpname: '',
-                    select: '',
-                    LPTypes: [],
-                    date: null,
-                    time: null,
-                    singleCheckbox: false,
-                    multipleCheckbox: [],
-                    radio: '',
-                    switcher: false,
-                    segment: [],
-                    upload: [],
+                    location: '',
+                    LPTypes: ''
                 }}
+            
                 validationSchema={validationSchema}
+                
                 onSubmit={(values, { setSubmitting }) => {
-                    console.log('values', values)
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2))
-                        setSubmitting(false)
-                        onCloseDialog() // Call the closing function
-                    }, 400)
+                    console.log("test")
+                    const apiUrl = 'http://localhost:8000/api/lps/';
+                
+                    fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Include other necessary headers such as authorization tokens
+                        },
+                        body: JSON.stringify({
+                            lpname: values.lpname,
+                            location: values.location,
+                            type: values.LPTypes
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        alert('Record created successfully!');
+                        onCloseDialog();
+                        setSubmitting(false);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                        setSubmitting(false);
+                    });
                 }}
             >
                 {({ values, touched, errors, resetForm }) => (
@@ -99,28 +98,42 @@ const LPFormControl = ({ onCloseDialog }: LPFormControlProps) => {
 
                             <FormItem
                                 asterisk
-                                label="Select Type(s)"
-                                invalid={Boolean(
-                                    errors.LPTypes && touched.LPTypes,
-                                )}
-                                errorMessage={errors.LPTypes as string}
+                                label="Location"
+                                invalid={errors.location && touched.location}
+                                errorMessage={errors.location}
+                            >
+                                <Field
+                                    type="text"
+                                    name="location"
+                                    placeholder="Add location"
+                                    component={Input}
+                                />
+                            </FormItem>
+
+                            <FormItem
+                                asterisk
+                                label="Select Type"
+                                invalid={errors.LPTypes && touched.LPTypes}
+                                errorMessage={errors.LPTypes}
                             >
                                 <Field name="LPTypes">
                                     {({
                                         field,
                                         form,
                                     }: FieldProps<FormModel>) => (
-                                        <Select<Option, true>
-                                            isMulti
-                                            componentAs={CreatableSelect}
+                                        <Select
                                             field={field}
                                             form={form}
                                             options={options}
-                                            value={values.LPTypes}
+                                            value={options.filter(
+                                                (option) => 
+                                                    option.label ===
+                                                values.LPTypes
+                                            )}
                                             onChange={(option) => {
                                                 form.setFieldValue(
                                                     field.name,
-                                                    option,
+                                                    option?.label
                                                 )
                                             }}
                                         />
@@ -147,7 +160,6 @@ const LPFormControl = ({ onCloseDialog }: LPFormControlProps) => {
                                     <Button
                                         variant="solid"
                                         type="submit"
-                                        onClick={onCloseDialog}
                                     >
                                         Submit
                                     </Button>
