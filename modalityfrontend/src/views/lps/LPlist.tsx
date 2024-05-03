@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from 'react'
 import Table from '@/components/ui/Table'
 import Input from '@/components/ui/Input'
 import InternalScroll from './LPformdialog'
+import { fetchLPs, LPs } from './data';  // Import the fetch function and type
 
 import {
     useReactTable,
@@ -15,8 +16,6 @@ import {
     flexRender,
 } from '@tanstack/react-table'
 import { rankItem } from '@tanstack/match-sorter-utils'
-import { data10 } from './data'
-import type { LPs } from './data'
 import type {
     ColumnDef,
     FilterFn,
@@ -88,17 +87,30 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 const Filtering = () => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [globalFilter, setGlobalFilter] = useState('')
+    const [data, setData] = useState<LPs[]>([]);  // Use state to store LPs data
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const lps = await fetchLPs();
+                setData(lps);
+            } catch (error) {
+                console.error('Failed to fetch LPs:', error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const columns = useMemo<ColumnDef<LPs>[]>(
         () => [
-            { header: 'LP Name', accessorKey: 'lp_name' },
+            { header: 'LP Name', accessorKey: 'lpname' },
+            { header: 'Location', accessorKey: 'location' },
+            { header: 'Type', accessorKey: 'type'},
             { header: 'Total Invested', accessorKey: 'total_invested' },
-            { header: 'Positions', accessorKey: 'positions' },
+            // { header: 'Positions', accessorKey: 'positions' },
         ],
         [],
     )
-
-    const [data] = useState(() => data10)
 
     const table = useReactTable({
         data,

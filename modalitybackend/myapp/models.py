@@ -16,7 +16,6 @@ class Company(models.Model):
 class Fund(models.Model):
     fundid = models.AutoField(db_column='FundID', primary_key=True)  # Field name made lowercase.
     fundname = models.CharField(db_column='FundName', max_length=255)  # Field name made lowercase.
-    fundsize = models.BigIntegerField(db_column='FundSize', blank=True, null=True)  # Field name made lowercase.
     fundtype = models.CharField(db_column='FundType', max_length=100, blank=True, null=True)  # Field name made lowercase.
     status = models.CharField(db_column='Status', max_length=6)  # Field name made lowercase.
     datecreated = models.DateField(db_column='DateCreated')  # Field name made lowercase.

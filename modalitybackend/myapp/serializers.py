@@ -12,9 +12,17 @@ class FundSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class LpSerializer(serializers.ModelSerializer):
+    total_invested = serializers.SerializerMethodField()
+
     class Meta:
         model = Lp
-        fields = '__all__'
+        fields = ['lpid', 'lpname', 'location', 'type', 'total_invested']  # Explicitly list all model fields plus the new field
+
+    def get_total_invested(self, obj):
+        total = Fundraise.objects.filter(lpid=obj).aggregate(
+            total_invested=serializers.models.Sum('amountinvested')
+        )['total_invested']
+        return total if total is not None else 0
 
 class FundraiseSerializer(serializers.ModelSerializer):
     class Meta:
