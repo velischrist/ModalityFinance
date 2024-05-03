@@ -85,7 +85,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
     return itemRank.passed
 }
 
-const Filtering = () => {
+const FilteringFund = () => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [globalFilter, setGlobalFilter] = useState('')
 
@@ -206,4 +206,4 @@ const Filtering = () => {
     )
 }
 
-export default Filtering
+export default FilteringFund

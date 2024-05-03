@@ -46,7 +46,9 @@ export const protectedRoutes = [
     {
         key: 'OrganizationSettings',
         path: '/OrganizationSettings',
-        component: lazy(() => import('@/views/organizationsettings/Fundlist')),
+        component: lazy(
+            () => import('@/views/organizationsettings/organizationsettings'),
+        ),
         authority: [],
     },
     {
