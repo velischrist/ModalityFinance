@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc
-from .serializers import CompanySerializer, FundSerializer, LpSerializer, FundraiseSerializer, InvestmentSerializer, AgreementSerializer, FinancialDocSerializer, ReportDocSerializer
+from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc, Document
+from .serializers import CompanySerializer, FundSerializer, LpSerializer, FundraiseSerializer, InvestmentSerializer, AgreementSerializer, FinancialDocSerializer, ReportDocSerializer, DocumentSerializer
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
@@ -34,3 +34,7 @@ class FinancialDocViewSet(viewsets.ModelViewSet):
 class ReportDocViewSet(viewsets.ModelViewSet):
     queryset = ReportDoc.objects.all()
     serializer_class = ReportDocSerializer
+
+class DocumentViewSet(viewsets.ModelViewSet):
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc
+from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc, Document
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,4 +47,9 @@ class FinancialDocSerializer(serializers.ModelSerializer):
 class ReportDocSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReportDoc
+        fields = '__all__'
+
+class DocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Document
         fields = '__all__'
