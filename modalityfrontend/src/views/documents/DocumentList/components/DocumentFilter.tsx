@@ -1,7 +1,7 @@
 import { useState, useRef, forwardRef } from 'react'
 import { HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
 import {
-    getCompanies,
+    getDocuments,
     setFilterData,
     initialTableData,
     useAppDispatch,
@@ -10,16 +10,16 @@ import {
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import Checkbox from '@/components/ui/Checkbox'
+// import Checkbox from '@/components/ui/Checkbox'
 import Radio from '@/components/ui/Radio'
 import Drawer from '@/components/ui/Drawer'
 import { Field, Form, Formik, FormikProps, FieldProps } from 'formik'
 import type { MouseEvent } from 'react'
 
 type FormModel = {
-    companyName: string
-    industry: string
-    location: string
+    documentName: string
+    status: number
+    uploadedAt: string
 }
 
 type FilterFormProps = {
@@ -36,13 +36,13 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.salesCompanyList.data.filterData,
+            (state) => state.salesDocumentList.data.filterData,
         )
 
         const handleSubmit = (values: FormModel) => {
             onSubmitComplete?.()
             dispatch(setFilterData(values))
-            dispatch(getCompanies(initialTableData))
+            dispatch(getDocuments(initialTableData))
         }
 
         return (
@@ -59,9 +59,9 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                         <FormContainer>
                             <FormItem
                                 invalid={
-                                    errors.companyName && touched.companyName
+                                    errors.documentName && touched.documentName
                                 }
-                                errorMessage={errors.companyName}
+                                errorMessage={errors.documentName}
                             >
                                 <h6 className="mb-4">Included text</h6>
                                 <Field
@@ -75,69 +75,12 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                     }
                                 />
                             </FormItem>
-                            <FormItem
-                                invalid={errors.stt && touched.industry}
-                                errorMessage={errors.industry as string}
-                            >
-                                <h6 className="mb-4">Company industry</h6>
-                                <Field name="industry">
-                                    {({ field, form }: FieldProps) => (
-                                        <>
-                                            <Checkbox.Group
-                                                vertical
-                                                value={values.industry}
-                                                onChange={(options) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        options,
-                                                    )
-                                                }
-                                            >
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="Technology"
-                                                >
-                                                    Bags{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="Healthcare"
-                                                >
-                                                    Healthcare{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="Services"
-                                                >
-                                                    Services{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    className="mb-3"
-                                                    name={field.name}
-                                                    value="Travel"
-                                                >
-                                                    Travel{' '}
-                                                </Checkbox>
-                                                <Checkbox
-                                                    name={field.name}
-                                                    value="Banking"
-                                                >
-                                                    Banking{' '}
-                                                </Checkbox>
-                                            </Checkbox.Group>
-                                        </>
-                                    )}
-                                </Field>
-                            </FormItem>
 
                             <FormItem
                                 invalid={errors.status && touched.status}
                                 errorMessage={errors.status}
                             >
-                                <h6 className="mb-4">Company Status</h6>
+                                <h6 className="mb-4">Document Status</h6>
                                 <Field name="status">
                                     {({ field, form }: FieldProps) => (
                                         <Radio.Group
@@ -150,9 +93,11 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                 )
                                             }
                                         >
-                                            <Radio value={0}>Open</Radio>
-                                            <Radio value={1}>Closed</Radio>
-                                            <Radio value={2}>Prospect</Radio>
+                                            <Radio value={0}>Mapped</Radio>
+                                            <Radio value={1}>
+                                                Mapping Pending
+                                            </Radio>
+                                            <Radio value={2}>Error</Radio>
                                         </Radio.Group>
                                     )}
                                 </Field>
@@ -178,7 +123,7 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
     )
 }
 
-const CompanyFilter = () => {
+const DocumentFilter = () => {
     const formikRef = useRef<FormikProps<FormModel>>(null)
 
     const [isOpen, setIsOpen] = useState(false)
@@ -225,4 +170,4 @@ const CompanyFilter = () => {
 
 FilterForm.displayName = 'FilterForm'
 
-export default CompanyFilter
+export default DocumentFilter

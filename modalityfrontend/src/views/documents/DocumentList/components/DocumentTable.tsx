@@ -5,15 +5,15 @@ import DataTable from '@/components/shared/DataTable'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
-    getCompanies,
+    getDocuments,
     setTableData,
-    setSelectedCompany,
+    setSelectedDocument,
     toggleDeleteConfirmation,
     useAppDispatch,
     useAppSelector,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
-import CompanyDeleteConfirmation from './CompanyDeleteConfirmation'
+import DocumentDeleteConfirmation from './DocumentDeleteConfirmation'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import type {
@@ -22,15 +22,15 @@ import type {
     ColumnDef,
 } from '@/components/shared/DataTable'
 
-type Company = {
-    id: number
-    companyName: string
-    location: string
+type Document = {
+    documentId: string
+    documentName: string
+    uploadedAt: string
     // status: string
-    industry: string
+    // industry: string
     // investedAt: string
     // amountInvested: number
-    // status: number
+    status: number
 }
 
 const inventoryStatusColor: Record<
@@ -42,34 +42,34 @@ const inventoryStatusColor: Record<
     }
 > = {
     0: {
-        label: 'In Stock',
+        label: 'Mapped',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
     1: {
-        label: 'Limited',
+        label: 'Mapping Pending',
         dotClass: 'bg-amber-500',
         textClass: 'text-amber-500',
     },
     2: {
-        label: 'Out of Stock',
+        label: 'Error',
         dotClass: 'bg-red-500',
         textClass: 'text-red-500',
     },
 }
 
-const ActionColumn = ({ row }: { row: Company }) => {
+const ActionColumn = ({ row }: { row: Document }) => {
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/app/companies/company-edit/${row.id}`)
+        navigate(`/app/documents/document-edit/${row.documentId}`)
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedCompany(row.id))
+        dispatch(setSelectedDocument(row.documentId))
     }
 
     return (
@@ -90,7 +90,7 @@ const ActionColumn = ({ row }: { row: Company }) => {
     )
 }
 
-const CompanyColumn = ({ row }: { row: Company }) => {
+const DocumentColumn = ({ row }: { row: Document }) => {
     // const avatar = row.img ? (
     //     <Avatar src={row.img} />
     // ) : (
@@ -101,31 +101,31 @@ const CompanyColumn = ({ row }: { row: Company }) => {
         <div className="flex items-center">
             {/* {avatar} */}
             <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                {row.companyName}
+                {row.documentName}
             </span>
         </div>
     )
 }
 
-const CompanyTable = () => {
+const DocumentTable = () => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.salesCompanyList.data.tableData,
+        (state) => state.salesDocumentList.data.tableData,
     )
 
     const filterData = useAppSelector(
-        (state) => state.salesCompanyList.data.filterData,
+        (state) => state.salesDocumentList.data.filterData,
     )
 
     const loading = useAppSelector(
-        (state) => state.salesCompanyList.data.loading,
+        (state) => state.salesDocumentList.data.loading,
     )
 
     const data = useAppSelector(
-        (state) => state.salesCompanyList.data.companyList,
+        (state) => state.salesDocumentList.data.documentList,
     )
 
     useEffect(() => {
@@ -145,54 +145,54 @@ const CompanyTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getCompanies({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(getDocuments({ pageIndex, pageSize, sort, query, filterData }))
     }
 
-    const columns: ColumnDef<Company>[] = useMemo(
+    const columns: ColumnDef<Document>[] = useMemo(
         () => [
             {
-                header: 'Company Name',
-                accessorKey: 'companyName',
+                header: 'Document Name',
+                accessorKey: 'documentName',
                 cell: (props) => {
                     const row = props.row.original
-                    return <CompanyColumn row={row} />
+                    return <DocumentColumn row={row} />
+                },
+            },
+            {
+                header: 'Status',
+                accessorKey: 'status',
+                cell: (props) => {
+                    const { status } = props.row.original
+                    return (
+                        <div className="flex items-center gap-2">
+                            <Badge
+                                className={
+                                    inventoryStatusColor[status].dotClass
+                                }
+                            />
+                            <span
+                                className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
+                            >
+                                {inventoryStatusColor[status].label}
+                            </span>
+                        </div>
+                    )
                 },
             },
             // {
-            //     header: 'Indus',
+            //     header: 'Status',
             //     accessorKey: 'status',
             //     cell: (props) => {
-            //         const { status } = props.row.original
-            //         return (
-            //             <div className="flex items-center gap-2">
-            //                 <Badge
-            //                     className={
-            //                         inventoryStatusColor[status].dotClass
-            //                     }
-            //                 />
-            //                 <span
-            //                     className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
-            //                 >
-            //                     {inventoryStatusColor[status].label}
-            //                 </span>
-            //             </div>
-            //         )
+            //         const row = props.row.original
+            //         return <span className="capitalize">{row.status}</span>
             //     },
             // },
             {
-                header: 'Industry',
-                accessorKey: 'industry',
+                header: 'Uploaded At',
+                accessorKey: 'uploadedAt',
                 cell: (props) => {
                     const row = props.row.original
-                    return <span className="capitalize">{row.industry}</span>
-                },
-            },
-            {
-                header: 'Location',
-                accessorKey: 'location',
-                cell: (props) => {
-                    const row = props.row.original
-                    return <span className="capitalize">{row.location}</span>
+                    return <span className="capitalize">{row.uploadedAt}</span>
                 },
             },
             // {
@@ -258,9 +258,9 @@ const CompanyTable = () => {
                 onSelectChange={onSelectChange}
                 onSort={onSort}
             />
-            <CompanyDeleteConfirmation />
+            <DocumentDeleteConfirmation />
         </>
     )
 }
 
-export default CompanyTable
+export default DocumentTable

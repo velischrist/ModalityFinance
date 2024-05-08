@@ -3,6 +3,7 @@ import Loading from '@/components/shared/Loading'
 import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
+import Tabs from '@/components/ui/Tabs'
 import reducer, {
     getCompany,
     updateCompany,
@@ -10,6 +11,7 @@ import reducer, {
     useAppSelector,
     useAppDispatch,
 } from './store'
+import DocumentList from '../../documents/DocumentList'
 import { injectReducer } from '@/store'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -19,6 +21,8 @@ import CompanyForm, {
     OnDeleteCallback,
 } from '@/views/companies/CompanyForm'
 import isEmpty from 'lodash/isEmpty'
+
+const { TabNav, TabList, TabContent } = Tabs
 
 injectReducer('salesCompanyEdit', reducer)
 
@@ -93,13 +97,56 @@ const CompanyEdit = () => {
             <Loading loading={loading}>
                 {!isEmpty(companyData) && (
                     <>
+                        <div>
+                            {/* <h3>{companyData.name}</h3> */}
+                            <h3 className="mb-5 lg:mb-5">
+                                {companyData.companyName}
+                            </h3>
+                            <Tabs defaultValue="tab1">
+                                <TabList>
+                                    <TabNav value="tab1">
+                                        Company Updates
+                                    </TabNav>
+                                    <TabNav value="tab2">Details</TabNav>
+                                    {/* <TabNav value="tab3">Agreements</TabNav>
+                    <TabNav value="tab4">Meeting Calls</TabNav>
+                    <TabNav value="tab5">Expert Calls</TabNav>
+                    <TabNav value="tab6">Due Diligence Documents</TabNav> */}
+                                </TabList>
+                                <div className="p-4">
+                                    <TabContent value="tab1">
+                                        <DocumentList></DocumentList>
+                                    </TabContent>
+                                    <TabContent value="tab2">
+                                        <CompanyForm
+                                            type="edit"
+                                            initialData={companyData}
+                                            onFormSubmit={handleFormSubmit}
+                                            onDiscard={handleDiscard}
+                                            onDelete={handleDelete}
+                                        />
+                                    </TabContent>
+                                    {/* <TabContent value="tab3"></TabContent> */}
+                                    {/* <TabContent value="tab4">
+                       
+                    </TabContent>
+                    <TabContent value="tab5">
+                       
+                    </TabContent>
+                    <TabContent value="tab6">
+                       
+                    </TabContent> */}
+                                </div>
+                            </Tabs>
+                        </div>
+                        {/* <h3>{companyData.name}</h3>
                         <CompanyForm
                             type="edit"
                             initialData={companyData}
                             onFormSubmit={handleFormSubmit}
                             onDiscard={handleDiscard}
                             onDelete={handleDelete}
-                        />
+                        /> */}
                     </>
                 )}
             </Loading>

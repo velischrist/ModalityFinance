@@ -159,8 +159,22 @@ export const searchQueryPoolData = [
         categoryTitle: 'Apps',
     },
     {
+        title: 'Document Edit',
+        url: 'app/documents/document-edit/12',
+        icon: 'sales',
+        category: 'Sales',
+        categoryTitle: 'Apps',
+    },
+    {
         title: 'New Company',
         url: '/app/companies/company-new',
+        icon: 'sales',
+        category: 'Sales',
+        categoryTitle: 'Apps',
+    },
+    {
+        title: 'New Document',
+        url: '/app/documents/document-new',
         icon: 'sales',
         category: 'Sales',
         categoryTitle: 'Apps',

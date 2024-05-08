@@ -7,25 +7,9 @@ import {
 
 type CompanyData = {
     id?: string
-    name?: string
-    companyCode?: string
-    img?: string
-    imgList?: {
-        id: string
-        name: string
-        img: string
-    }[]
-    category?: string
-    price?: number
-    stock?: number
-    status?: number
-    costPerItem?: number
-    bulkDiscountPrice?: number
-    description?: string
-    taxRate?: 6
-    tags?: string[]
-    brand?: string
-    vendor?: string
+    companyName?: string
+    industry?: string
+    location?: string
 }
 
 export type SalesCompanyEditState = {

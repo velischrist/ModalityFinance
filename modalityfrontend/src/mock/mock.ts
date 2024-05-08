@@ -3,7 +3,12 @@ import appConfig from '@/configs/app.config'
 
 import { signInUserData } from './data/authData'
 
-import { companiesData, ordersData, orderDetailsData } from './data/salesData'
+import {
+    companiesData,
+    documentsData,
+    ordersData,
+    orderDetailsData,
+} from './data/salesData'
 import {
     helpCenterCategoriesData,
     helpCenterArticleListData,
@@ -20,6 +25,7 @@ export function mockServer({ environment = 'test' }) {
             server.db.loadData({
                 signInUserData,
                 companiesData,
+                documentsData,
                 ordersData,
                 orderDetailsData,
                 helpCenterCategoriesData,

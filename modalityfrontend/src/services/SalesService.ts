@@ -93,3 +93,56 @@ export async function apiGetSalesOrderDetails<
         params,
     })
 }
+
+export async function apiGetSalesDocuments<
+    T,
+    U extends Record<string, unknown>,
+>(data: U) {
+    return ApiService.fetchData<T>({
+        url: '/sales/documents',
+        method: 'post',
+        data,
+    })
+}
+
+export async function apiDeleteSalesDocuments<
+    T,
+    U extends Record<string, unknown>,
+>(data: U) {
+    return ApiService.fetchData<T>({
+        url: '/sales/documents/delete',
+        method: 'delete',
+        data,
+    })
+}
+
+export async function apiGetSalesDocument<T, U extends Record<string, unknown>>(
+    params: U,
+) {
+    return ApiService.fetchData<T>({
+        url: '/sales/document',
+        method: 'get',
+        params,
+    })
+}
+
+export async function apiPutSalesDocument<T, U extends Record<string, unknown>>(
+    data: U,
+) {
+    return ApiService.fetchData<T>({
+        url: '/sales/documents/update',
+        method: 'put',
+        data,
+    })
+}
+
+export async function apiCreateSalesDocument<
+    T,
+    U extends Record<string, unknown>,
+>(data: U) {
+    return ApiService.fetchData<T>({
+        url: '/sales/documents/create',
+        method: 'post',
+        data,
+    })
+}

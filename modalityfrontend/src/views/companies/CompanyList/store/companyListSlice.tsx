@@ -10,9 +10,7 @@ type Company = {
     companyName: string
     // status: string
     industry: string
-    investedAt: string
-    amountInvested: number
-    status: number
+    location: string
 }
 
 type Companies = Company[]
@@ -24,8 +22,8 @@ type GetSalesCompaniesResponse = {
 
 type FilterQueries = {
     companyName: string
-    industry: string[]
-    status: number[]
+    industry: string
+    location: string
 }
 
 export type SalesCompanyListState = {
@@ -79,8 +77,8 @@ const initialState: SalesCompanyListState = {
     tableData: initialTableData,
     filterData: {
         companyName: '',
-        industry: ['Technology', 'Healthcare', 'Services', 'Travel', 'Banking'],
-        status: [0, 1, 2],
+        industry: '',
+        location: '',
     },
 }
 

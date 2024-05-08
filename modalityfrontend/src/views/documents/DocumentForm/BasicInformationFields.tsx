@@ -5,9 +5,9 @@ import { FormItem } from '@/components/ui/Form'
 import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
 
 type FormFieldsName = {
-    companyName: string
-    industry: string
-    location: string
+    documentName: string
+    status: number
+    uploadedAt: string
 }
 
 type BasicInformationFields = {
@@ -21,43 +21,45 @@ const BasicInformationFields = (props: BasicInformationFields) => {
     return (
         <AdaptableCard divider className="mb-4">
             <h5>Basic Information</h5>
-            <p className="mb-6">Section to config basic company information</p>
+            <p className="mb-6">Section to config basic document information</p>
             <FormItem
-                label="Company Name"
-                invalid={(errors.companyName && touched.companyName) as boolean}
-                errorMessage={errors.companyName}
+                label="Document Name"
+                invalid={
+                    (errors.documentName && touched.documentName) as boolean
+                }
+                errorMessage={errors.documentName}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="companyName"
-                    placeholder="Company Name"
+                    name="documentName"
+                    placeholder="Document Name"
                     component={Input}
                 />
             </FormItem>
             <FormItem
-                label="Industry"
-                invalid={(errors.industry && touched.industry) as boolean}
-                errorMessage={errors.industry}
+                label="Status"
+                invalid={(errors.status && touched.status) as boolean}
+                errorMessage={errors.status}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="industry"
-                    placeholder="Industry"
+                    name="status"
+                    placeholder="Status"
                     component={Input}
                 />
             </FormItem>
             <FormItem
-                label="Location"
-                invalid={(errors.location && touched.location) as boolean}
-                errorMessage={errors.location}
+                label="Uploaded at"
+                invalid={(errors.uploadedAt && touched.uploadedAt) as boolean}
+                errorMessage={errors.uploadedAt}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="location"
-                    placeholder="Location"
+                    name="uploadedAt"
+                    placeholder="Uploaded at"
                     component={Input}
                 />
             </FormItem>

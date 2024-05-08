@@ -77,6 +77,75 @@ export default function salesFakeApi(server: Server, apiPrefix: string) {
         },
     )
 
+    server.post(`${apiPrefix}/sales/documents`, (schema, { requestBody }) => {
+        const body = JSON.parse(requestBody)
+        const { pageIndex, pageSize, sort, query } = body
+        const { order, key } = sort
+        const documents = schema.db.documentsData
+        const sanitizeDocuments = documents.filter(
+            (elm) => typeof elm !== 'function',
+        )
+        let data = sanitizeDocuments
+        let total = documents.length
+
+        if ((key === 'category' || key === 'name') && order) {
+            data.sort(
+                sortBy(key, order === 'desc', (a) =>
+                    (a as string).toUpperCase(),
+                ),
+            )
+        } else {
+            data.sort(sortBy(key, order === 'desc', parseInt as Primer))
+        }
+
+        if (query) {
+            data = wildCardSearch(data, query)
+            total = data.length
+        }
+
+        data = paginate(data, pageSize, pageIndex)
+
+        const responseData = {
+            data: data,
+            total: total,
+        }
+        return responseData
+    })
+
+    server.del(
+        `${apiPrefix}/sales/documents/delete`,
+        (schema, { requestBody }) => {
+            const { documentId } = JSON.parse(requestBody)
+            schema.db.documentsData.remove({ documentId })
+            return true
+        },
+    )
+
+    server.get(`${apiPrefix}/sales/document`, (schema, { queryParams }) => {
+        const documentId = queryParams.documentId
+        const document = schema.db.documentsData.find(documentId as string)
+        return document
+    })
+
+    server.put(
+        `${apiPrefix}/sales/documents/update`,
+        (schema, { requestBody }) => {
+            const data = JSON.parse(requestBody)
+            const { documentId } = data
+            schema.db.documentsData.update({ documentId }, data)
+            return true
+        },
+    )
+
+    server.post(
+        `${apiPrefix}/sales/documents/create`,
+        (schema, { requestBody }) => {
+            const data = JSON.parse(requestBody)
+            schema.db.documentsData.insert(data)
+            return true
+        },
+    )
+
     server.get(`${apiPrefix}/sales/orders`, (schema, { queryParams }) => {
         const { pageIndex, pageSize, query } = queryParams
         const order = queryParams['sort[order]']

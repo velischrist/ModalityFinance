@@ -7,7 +7,7 @@ import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import { Form, Formik, FormikProps } from 'formik'
 import BasicInformationFields from './BasicInformationFields'
 // import PricingFields from './PricingFields'
-import AssetDetailsFields from './AssetDetailsFields'
+import DocumentDetailsFields from './DocumentDetailsFields'
 // import ProductImages from './ProductImages'
 import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
@@ -18,10 +18,10 @@ import * as Yup from 'yup'
 type FormikRef = FormikProps<any>
 
 type InitialData = {
-    id?: string
-    companyName?: string
-    industry?: string
-    location?: string
+    documentId?: string
+    documentName?: string
+    status?: number
+    uploadedAt?: string
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
@@ -45,9 +45,9 @@ type ProductForm = {
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    companyName: Yup.string().required('Company Name is required'),
-    industry: Yup.string().required('Industry is required'),
-    location: Yup.string().required('Location is required'),
+    documentName: Yup.string().required('Document Name is required'),
+    uploadedAt: Yup.string().required('Date is required'),
+    status: Yup.number().required('Status is required'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
@@ -88,9 +88,9 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
                 onConfirm={handleConfirm}
             >
                 <p>
-                    Are you sure you want to delete this asset? All record
-                    related to this asset will be deleted as well. This action
-                    cannot be undone.
+                    Are you sure you want to delete this document? All record
+                    related to this document will be deleted as well. This
+                    action cannot be undone.
                 </p>
             </ConfirmDialog>
         </>
@@ -101,10 +101,10 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
     const {
         type,
         initialData = {
-            id: '',
-            companyName: '',
-            industry: '',
-            location: '',
+            documentId: '',
+            documentName: '',
+            status: [],
+            uploadedAt: '',
         },
         onFormSubmit,
         onDiscard,
@@ -125,7 +125,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                     const formData = cloneDeep(values)
 
                     if (type === 'new') {
-                        formData.id = newId
+                        formData.documentId = newId
                     }
                     onFormSubmit?.(formData, setSubmitting)
                 }}
@@ -136,10 +136,10 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                             {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-4"> */}
                             <div className="lg:col-span-2">
                                 {/* <BasicInformationFields
-                                        touched={touched}
-                                        errors={errors}
-                                    /> */}
-                                <AssetDetailsFields
+                                    touched={touched}
+                                    errors={errors}
+                                /> */}
+                                <DocumentDetailsFields
                                     touched={touched}
                                     errors={errors}
                                     values={values}
