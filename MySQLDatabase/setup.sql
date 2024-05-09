@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS companies;
 -- Creating the 'Companies' table
 CREATE TABLE companies (
     CompanyID INT AUTO_INCREMENT PRIMARY KEY,
-    CompanyName VARCHAR(255) NOT NULL,
+    companyname VARCHAR(255) NOT NULL,
     Industry VARCHAR(100),
     Status ENUM('Open', 'Closed') NOT NULL,
     Location VARCHAR(255),

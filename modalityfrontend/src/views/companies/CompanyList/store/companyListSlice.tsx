@@ -1,16 +1,18 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, Slice } from '@reduxjs/toolkit'
 import {
     apiGetSalesCompanies,
     apiDeleteSalesCompanies,
 } from '@/services/SalesService'
 import type { TableQueries } from '@/@types/common'
+import paginate from '@/utils/paginate'
 
 type Company = {
-    id: number
-    companyName: string
+    companyid: number
+    companyname: string
     // status: string
     industry: string
     location: string
+    // datecreated: string
 }
 
 type Companies = Company[]
@@ -21,7 +23,7 @@ type GetSalesCompaniesResponse = {
 }
 
 type FilterQueries = {
-    companyName: string
+    companyname: string
     industry: string
     location: string
 }
@@ -29,10 +31,10 @@ type FilterQueries = {
 export type SalesCompanyListState = {
     loading: boolean
     deleteConfirmation: boolean
-    selectedCompany: string
+    selectedCompany: number
     tableData: TableQueries
     filterData: FilterQueries
-    companyList: Company[]
+    companyList: GetSalesCompaniesResponse
 }
 
 type GetSalesCompaniesRequest = TableQueries & { filterData?: FilterQueries }
@@ -46,20 +48,21 @@ export const getCompanies = createAsyncThunk(
             GetSalesCompaniesResponse,
             GetSalesCompaniesRequest
         >(data)
-        return response.data
+        console.log('API Data:', response);
+        return response.data;
     },
 )
 
-export const deleteCompany = async (data: { id: string | string[] }) => {
+export const deleteCompany = async (data: { companyid: number }) => {
     const response = await apiDeleteSalesCompanies<
         boolean,
-        { id: string | string[] }
+        { companyid: number }
     >(data)
-    return response.data
+    return response;
 }
 
 export const initialTableData: TableQueries = {
-    total: 0,
+    total: 10,
     pageIndex: 1,
     pageSize: 10,
     query: '',
@@ -72,17 +75,17 @@ export const initialTableData: TableQueries = {
 const initialState: SalesCompanyListState = {
     loading: false,
     deleteConfirmation: false,
-    selectedCompany: '',
-    companyList: [],
+    selectedCompany: -1,
+    companyList: {data: [], total: 0},
     tableData: initialTableData,
     filterData: {
-        companyName: '',
+        companyname: '',
         industry: '',
         location: '',
     },
 }
 
-const companyListSlice = createSlice({
+const companyListSlice: Slice<SalesCompanyListState> = createSlice({
     name: `${SLICE_NAME}/state`,
     initialState,
     reducers: {
@@ -105,7 +108,7 @@ const companyListSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getCompanies.fulfilled, (state, action) => {
-                state.companyList = action.payload.data
+                state.companyList = action.payload
                 state.tableData.total = action.payload.total
                 state.loading = false
             })

@@ -17,7 +17,7 @@ import { Field, Form, Formik, FormikProps, FieldProps } from 'formik'
 import type { MouseEvent } from 'react'
 
 type FormModel = {
-    companyName: string
+    companyname: string
     industry: string
     location: string
 }
@@ -59,9 +59,9 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                         <FormContainer>
                             <FormItem
                                 invalid={
-                                    errors.companyName && touched.companyName
+                                    errors.companyname && touched.companyname
                                 }
-                                errorMessage={errors.companyName}
+                                errorMessage={errors.companyname}
                             >
                                 <h6 className="mb-4">Included text</h6>
                                 <Field
@@ -76,7 +76,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 />
                             </FormItem>
                             <FormItem
-                                invalid={errors.stt && touched.industry}
+                                invalid={touched.industry}
                                 errorMessage={errors.industry as string}
                             >
                                 <h6 className="mb-4">Company industry</h6>
@@ -85,7 +85,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                         <>
                                             <Checkbox.Group
                                                 vertical
-                                                value={values.industry}
+                                                value={[values.industry]}
                                                 onChange={(options) =>
                                                     form.setFieldValue(
                                                         field.name,
@@ -133,16 +133,21 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 </Field>
                             </FormItem>
 
-                            <FormItem
+                            {/* <FormItem
                                 invalid={errors.status && touched.status}
                                 errorMessage={errors.status}
+                            > */}
+
+                            <FormItem
+                                invalid={false}
+                                errorMessage={"test"}
                             >
                                 <h6 className="mb-4">Company Status</h6>
                                 <Field name="status">
                                     {({ field, form }: FieldProps) => (
                                         <Radio.Group
                                             vertical
-                                            value={values.status}
+                                            value={"values.status"}
                                             onChange={(val) =>
                                                 form.setFieldValue(
                                                     field.name,

@@ -3,10 +3,10 @@ from django.db import models
 
 class Company(models.Model):
     companyid = models.AutoField(db_column='CompanyID', primary_key=True)  # Field name made lowercase.
-    companyname = models.CharField(db_column='CompanyName', max_length=255)  # Field name made lowercase.
+    companyname = models.CharField(db_column='companyname', max_length=255)  # Field name made lowercase.
     industry = models.CharField(db_column='Industry', max_length=100, blank=True, null=True)  # Field name made lowercase.
     location = models.CharField(db_column='Location', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    datecreated = models.DateField(db_column='DateCreated')  # Field name made lowercase.
+    datecreated = models.DateField(db_column='DateCreated', null=True)  # Field name made lowercase.
 
     class Meta:
         managed = True

@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Company',
             fields=[
                 ('companyid', models.AutoField(db_column='CompanyID', primary_key=True, serialize=False)),
-                ('companyname', models.CharField(db_column='CompanyName', max_length=255)),
+                ('companyname', models.CharField(db_column='companyname', max_length=255)),
                 ('industry', models.CharField(blank=True, db_column='Industry', max_length=100, null=True)),
                 ('status', models.CharField(db_column='Status', max_length=6)),
                 ('location', models.CharField(blank=True, db_column='Location', max_length=255, null=True)),

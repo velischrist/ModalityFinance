@@ -18,14 +18,14 @@ import * as Yup from 'yup'
 type FormikRef = FormikProps<any>
 
 type InitialData = {
-    id?: string
-    companyName?: string
+    companyid?: number
+    companyname?: string
     industry?: string
     location?: string
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
-    tags: { label: string; value: string }[] | string[]
+    tags: { label: string; value: string }[] | string[] | { label: string; value: number }[]
 }
 
 export type SetSubmitting = (isSubmitting: boolean) => void
@@ -45,7 +45,7 @@ type ProductForm = {
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    companyName: Yup.string().required('Company Name is required'),
+    companyname: Yup.string().required('Company Name is required'),
     industry: Yup.string().required('Industry is required'),
     location: Yup.string().required('Location is required'),
 })
@@ -101,8 +101,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
     const {
         type,
         initialData = {
-            id: '',
-            companyName: '',
+            companyname: '',
             industry: '',
             location: '',
         },
@@ -124,9 +123,9 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                 onSubmit={(values: FormModel, { setSubmitting }) => {
                     const formData = cloneDeep(values)
 
-                    if (type === 'new') {
-                        formData.id = newId
-                    }
+                    // if (type === 'new') {
+                    //     formData.id = newId
+                    // }
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >

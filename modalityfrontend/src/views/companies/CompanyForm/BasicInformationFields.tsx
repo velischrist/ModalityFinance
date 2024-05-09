@@ -5,7 +5,7 @@ import { FormItem } from '@/components/ui/Form'
 import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
 
 type FormFieldsName = {
-    companyName: string
+    companyname: string
     industry: string
     location: string
 }
@@ -24,13 +24,13 @@ const BasicInformationFields = (props: BasicInformationFields) => {
             <p className="mb-6">Section to config basic company information</p>
             <FormItem
                 label="Company Name"
-                invalid={(errors.companyName && touched.companyName) as boolean}
-                errorMessage={errors.companyName}
+                invalid={(errors.companyname && touched.companyname) as boolean}
+                errorMessage={errors.companyname}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="companyName"
+                    name="companyname"
                     placeholder="Company Name"
                     component={Input}
                 />

@@ -39,7 +39,7 @@ const CompanyEdit = () => {
         (state) => state.salesCompanyEdit.data.loading,
     )
 
-    const fetchData = (data: { id: string }) => {
+    const fetchData = (data: { companyid: number }) => {
         dispatch(getCompany(data))
     }
 
@@ -61,7 +61,10 @@ const CompanyEdit = () => {
 
     const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
         setDialogOpen(false)
-        const success = await deleteCompany({ id: companyData.id })
+        const success = 0;
+        if (typeof companyData.companyid !== 'undefined') {
+            const success = await deleteCompany({ companyid: companyData.companyid })
+        }
         if (success) {
             popNotification('deleted')
         }
@@ -84,10 +87,9 @@ const CompanyEdit = () => {
     }
 
     useEffect(() => {
-        const path = location.pathname.substring(
-            location.pathname.lastIndexOf('/') + 1,
-        )
-        const rquestParam = { id: path }
+        const path = parseInt(location.pathname.substring(location.pathname.lastIndexOf('/') + 1))
+        console.log(path)
+        const rquestParam = { companyid: path }
         fetchData(rquestParam)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
@@ -100,7 +102,7 @@ const CompanyEdit = () => {
                         <div>
                             {/* <h3>{companyData.name}</h3> */}
                             <h3 className="mb-5 lg:mb-5">
-                                {companyData.companyName}
+                                {companyData.companyname}
                             </h3>
                             <Tabs defaultValue="tab1">
                                 <TabList>

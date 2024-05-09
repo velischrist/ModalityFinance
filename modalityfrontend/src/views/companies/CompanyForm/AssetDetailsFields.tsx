@@ -12,7 +12,7 @@ type Options = {
 
 type FormFieldsName = {
     industry: string
-    companyName: string
+    companyname: string
     location: string
 }
 
@@ -65,13 +65,13 @@ const AssetDetailsFields = (props: AssetDetailsFieldsProps) => {
 
             <FormItem
                 label="Company Name"
-                invalid={(errors.companyName && touched.companyName) as boolean}
-                errorMessage={errors.companyName}
+                invalid={(errors.companyname && touched.companyname) as boolean}
+                errorMessage={errors.companyname}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="companyName"
+                    name="companyname"
                     placeholder="Company Name"
                     component={Input}
                 />

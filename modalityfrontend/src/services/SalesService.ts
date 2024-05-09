@@ -1,41 +1,31 @@
 import ApiService from './ApiService'
 
-export async function apiGetSalesDashboardData<
-    T extends Record<string, unknown>,
->() {
-    return ApiService.fetchData<T>({
-        url: '/sales/dashboard',
-        method: 'post',
-    })
-}
-
 export async function apiGetSalesCompanies<
     T,
     U extends Record<string, unknown>,
->(data: U) {
+>(params: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/companies',
-        method: 'post',
-        data,
+        url: 'http://localhost:8000/api/companies',
+        method: 'get',
+        params,
     })
 }
 
 export async function apiDeleteSalesCompanies<
     T,
-    U extends Record<string, unknown>,
+    U extends { companyid: number },
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/companies/delete',
+        url: `http://localhost:8000/api/companies/${data.companyid}/`,
         method: 'delete',
-        data,
     })
 }
 
-export async function apiGetSalesCompany<T, U extends Record<string, unknown>>(
+export async function apiGetSalesCompany<T, U extends { companyid: number }>(
     params: U,
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/company',
+        url: `http://localhost:8000/api/companies/${params.companyid}/`,
         method: 'get',
         params,
     })
@@ -45,7 +35,7 @@ export async function apiPutSalesCompany<T, U extends Record<string, unknown>>(
     data: U,
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/companies/update',
+        url: `http://localhost:8000/api/companies/${data.companyid}/`,
         method: 'put',
         data,
     })
@@ -56,41 +46,9 @@ export async function apiCreateSalesCompany<
     U extends Record<string, unknown>,
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/companies/create',
+        url: 'http://localhost:8000/api/companies/',
         method: 'post',
         data,
-    })
-}
-
-export async function apiGetSalesOrders<T, U extends Record<string, unknown>>(
-    params: U,
-) {
-    return ApiService.fetchData<T>({
-        url: '/sales/orders',
-        method: 'get',
-        params,
-    })
-}
-
-export async function apiDeleteSalesOrders<
-    T,
-    U extends Record<string, unknown>,
->(data: U) {
-    return ApiService.fetchData<T>({
-        url: '/sales/orders/delete',
-        method: 'delete',
-        data,
-    })
-}
-
-export async function apiGetSalesOrderDetails<
-    T,
-    U extends Record<string, unknown>,
->(params: U) {
-    return ApiService.fetchData<T>({
-        url: '/sales/orders-details',
-        method: 'get',
-        params,
     })
 }
 
@@ -99,7 +57,7 @@ export async function apiGetSalesDocuments<
     U extends Record<string, unknown>,
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/documents',
+        url: 'http://localhost:8000/api/documents/',
         method: 'post',
         data,
     })
@@ -107,30 +65,30 @@ export async function apiGetSalesDocuments<
 
 export async function apiDeleteSalesDocuments<
     T,
-    U extends Record<string, unknown>,
+    U extends { documentid: number },
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/documents/delete',
+        url: `http://localhost:8000/api/documents/${data.documentid}/`,
         method: 'delete',
         data,
     })
 }
 
-export async function apiGetSalesDocument<T, U extends Record<string, unknown>>(
+export async function apiGetSalesDocument<T, U extends { documentid: number }>(
     params: U,
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/document',
+        url: `http://localhost:8000/api/documents/${params.documentid}/`,
         method: 'get',
         params,
     })
 }
 
-export async function apiPutSalesDocument<T, U extends Record<string, unknown>>(
+export async function apiPutSalesDocument<T, U extends { documentid: number }>(
     data: U,
 ) {
     return ApiService.fetchData<T>({
-        url: '/sales/documents/update',
+        url: `http://localhost:8000/api/documents/${data.documentid}/`,
         method: 'put',
         data,
     })
@@ -141,7 +99,7 @@ export async function apiCreateSalesDocument<
     U extends Record<string, unknown>,
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: '/sales/documents/create',
+        url: 'http://localhost:8000/api/documents/',
         method: 'post',
         data,
     })

@@ -27,7 +27,7 @@ const CompanyDeleteConfirmation = () => {
 
     const onDelete = async () => {
         dispatch(toggleDeleteConfirmation(false))
-        const success = await deleteCompany({ id: selectedCompany })
+        const success = await deleteCompany({ companyid: selectedCompany })
 
         if (success) {
             dispatch(getCompanies(tableData))

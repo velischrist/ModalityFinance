@@ -147,13 +147,13 @@ export const salesDashboardData = {
 export const companiesData = [
     {
         id: '12',
-        companyName: 'Luminaire Giotto Headphones',
+        companyname: 'Luminaire Giotto Headphones',
         location: 'London, UK',
         industry: 'finance',
     },
     {
         id: '13',
-        companyName: 'Samsung',
+        companyname: 'Samsung',
         location: 'NY, USA',
         industry: 'technology',
     },

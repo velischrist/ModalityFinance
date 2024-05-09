@@ -23,39 +23,10 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Company = {
-    id: number
-    companyName: string
+    companyid: number
+    companyname: string
     location: string
-    // status: string
     industry: string
-    // investedAt: string
-    // amountInvested: number
-    // status: number
-}
-
-const inventoryStatusColor: Record<
-    number,
-    {
-        label: string
-        dotClass: string
-        textClass: string
-    }
-> = {
-    0: {
-        label: 'In Stock',
-        dotClass: 'bg-emerald-500',
-        textClass: 'text-emerald-500',
-    },
-    1: {
-        label: 'Limited',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    2: {
-        label: 'Out of Stock',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
 }
 
 const ActionColumn = ({ row }: { row: Company }) => {
@@ -64,12 +35,12 @@ const ActionColumn = ({ row }: { row: Company }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/app/companies/company-edit/${row.id}`)
+        navigate(`/app/companies/company-edit/${row.companyid}`)
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedCompany(row.id))
+        dispatch(setSelectedCompany(row.companyid))
     }
 
     return (
@@ -101,7 +72,7 @@ const CompanyColumn = ({ row }: { row: Company }) => {
         <div className="flex items-center">
             {/* {avatar} */}
             <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                {row.companyName}
+                {row.companyname}
             </span>
         </div>
     )
@@ -152,33 +123,12 @@ const CompanyTable = () => {
         () => [
             {
                 header: 'Company Name',
-                accessorKey: 'companyName',
+                accessorKey: 'companyname',
                 cell: (props) => {
                     const row = props.row.original
                     return <CompanyColumn row={row} />
                 },
             },
-            // {
-            //     header: 'Indus',
-            //     accessorKey: 'status',
-            //     cell: (props) => {
-            //         const { status } = props.row.original
-            //         return (
-            //             <div className="flex items-center gap-2">
-            //                 <Badge
-            //                     className={
-            //                         inventoryStatusColor[status].dotClass
-            //                     }
-            //                 />
-            //                 <span
-            //                     className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
-            //                 >
-            //                     {inventoryStatusColor[status].label}
-            //                 </span>
-            //             </div>
-            //         )
-            //     },
-            // },
             {
                 header: 'Industry',
                 accessorKey: 'industry',
@@ -195,23 +145,6 @@ const CompanyTable = () => {
                     return <span className="capitalize">{row.location}</span>
                 },
             },
-            // {
-            //     header: 'Invested At',
-            //     accessorKey: 'investedAt',
-            //     cell: (props) => {
-            //         const row = props.row.original
-            //         return <span className="capitalize">{row.investedAt}</span>
-            //     },
-            // },
-
-            // {
-            //     header: 'Amount Invested',
-            //     accessorKey: 'amountInvested',
-            //     cell: (props) => {
-            //         const { amountInvested } = props.row.original
-            //         return <span>${amountInvested}</span>
-            //     },
-            // },
             {
                 header: '',
                 id: 'action',
@@ -240,6 +173,7 @@ const CompanyTable = () => {
         dispatch(setTableData(newTableData))
     }
 
+    console.log(data)
     return (
         <>
             <DataTable

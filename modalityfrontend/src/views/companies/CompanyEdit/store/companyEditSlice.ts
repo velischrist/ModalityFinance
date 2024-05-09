@@ -6,8 +6,8 @@ import {
 } from '@/services/SalesService'
 
 type CompanyData = {
-    id?: string
-    companyName?: string
+    companyid?: number
+    companyname?: string
     industry?: string
     location?: string
 }
@@ -23,10 +23,10 @@ export const SLICE_NAME = 'salesCompanyEdit'
 
 export const getCompany = createAsyncThunk(
     SLICE_NAME + '/getCompanies',
-    async (data: { id: string }) => {
+    async (data: { companyid: number }) => {
         const response = await apiGetSalesCompany<
             GetSalesCompanyResponse,
-            { id: string }
+            { companyid: number }
         >(data)
         return response.data
     },
@@ -39,7 +39,7 @@ export const updateCompany = async <T, U extends Record<string, unknown>>(
     return response.data
 }
 
-export const deleteCompany = async <T, U extends Record<string, unknown>>(
+export const deleteCompany = async <T, U extends { companyid: number }>(
     data: U,
 ) => {
     const response = await apiDeleteSalesCompanies<T, U>(data)
