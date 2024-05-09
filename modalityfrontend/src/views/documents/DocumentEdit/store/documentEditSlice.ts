@@ -6,9 +6,10 @@ import {
 } from '@/services/SalesService'
 
 type DocumentData = {
-    documentId?: string
+    id?: string
     documentName?: string
-    status?: number
+    status?: string
+    type?: string
     uploadedAt?: string
 }
 
@@ -23,10 +24,10 @@ export const SLICE_NAME = 'salesDocumentEdit'
 
 export const getDocument = createAsyncThunk(
     SLICE_NAME + '/getDocuments',
-    async (data: { documentId: string }) => {
+    async (data: { id: string }) => {
         const response = await apiGetSalesDocument<
             GetSalesDocumentResponse,
-            { documentId: string }
+            { id: string }
         >(data)
         return response.data
     },

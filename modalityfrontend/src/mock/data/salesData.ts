@@ -146,29 +146,41 @@ export const salesDashboardData = {
 
 export const companiesData = [
     {
+<<<<<<< HEAD
         id: '12',
         companyname: 'Luminaire Giotto Headphones',
+=======
+        id: 12,
+        companyName: 'Luminaire Giotto Headphones',
+>>>>>>> 750ae0f (Documents pages)
         location: 'London, UK',
         industry: 'finance',
     },
     {
+<<<<<<< HEAD
         id: '13',
         companyname: 'Samsung',
+=======
+        id: 13,
+        companyName: 'Samsung',
+>>>>>>> 750ae0f (Documents pages)
         location: 'NY, USA',
         industry: 'technology',
     },
 ]
 export const documentsData = [
     {
-        documentId: '15',
+        id: '15',
         documentName: 'Financials1 2023',
-        status: 1,
+        status: 'Mapping Pending',
+        type: 'P&L Annual',
         uploadedAt: '02/02/2004',
     },
     {
-        documentId: '16',
+        id: '16',
         documentName: 'Financials 2023',
-        status: 2,
+        status: 'Mapped',
+        type: 'Monthly Report',
         uploadedAt: '02/02/2004',
     },
 ]

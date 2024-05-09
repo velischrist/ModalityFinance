@@ -4,6 +4,7 @@ import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import Tabs from '@/components/ui/Tabs'
+import HeaderGoBack from './headercompanyedit'
 import reducer, {
     getCompany,
     updateCompany,
@@ -100,6 +101,7 @@ const CompanyEdit = () => {
                 {!isEmpty(companyData) && (
                     <>
                         <div>
+                            <HeaderGoBack></HeaderGoBack>
                             {/* <h3>{companyData.name}</h3> */}
                             <h3 className="mb-5 lg:mb-5">
                                 {companyData.companyname}

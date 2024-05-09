@@ -3,7 +3,10 @@ import Loading from '@/components/shared/Loading'
 import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
+import HeaderGoBack from './headerdocumentedit'
+
 import Tabs from '@/components/ui/Tabs'
+
 import reducer, {
     getDocument,
     updateDocument,
@@ -39,7 +42,7 @@ const DocumentEdit = () => {
         (state) => state.salesDocumentEdit.data.loading,
     )
 
-    const fetchData = (data: { documentId: string }) => {
+    const fetchData = (data: { id: string }) => {
         dispatch(getDocument(data))
     }
 
@@ -62,7 +65,7 @@ const DocumentEdit = () => {
     const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
         setDialogOpen(false)
         const success = await deleteDocument({
-            documentId: documentData.documentId,
+            id: documentData.id,
         })
         if (success) {
             popNotification('deleted')
@@ -89,7 +92,7 @@ const DocumentEdit = () => {
         const path = location.pathname.substring(
             location.pathname.lastIndexOf('/') + 1,
         )
-        const rquestParam = { documentId: path }
+        const rquestParam = { id: path }
         fetchData(rquestParam)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
@@ -101,6 +104,7 @@ const DocumentEdit = () => {
                     <>
                         <div>
                             {/* <h3>{documentData.name}</h3> */}
+                            <HeaderGoBack></HeaderGoBack>
                             <h3 className="mb-5 lg:mb-5">
                                 {documentData.documentName}
                             </h3>
@@ -112,6 +116,7 @@ const DocumentEdit = () => {
                                 onDelete={handleDelete}
                             />
                         </div>
+
                         {/* <h3>{documentData.name}</h3>
                         <DocumentForm
                             type="edit"

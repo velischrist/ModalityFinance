@@ -18,7 +18,8 @@ import type { MouseEvent } from 'react'
 
 type FormModel = {
     documentName: string
-    status: number
+    status: string
+    type: string
     uploadedAt: string
 }
 

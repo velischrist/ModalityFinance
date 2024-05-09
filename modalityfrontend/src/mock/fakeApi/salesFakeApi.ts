@@ -115,15 +115,15 @@ export default function salesFakeApi(server: Server, apiPrefix: string) {
     server.del(
         `${apiPrefix}/sales/documents/delete`,
         (schema, { requestBody }) => {
-            const { documentId } = JSON.parse(requestBody)
-            schema.db.documentsData.remove({ documentId })
+            const { id } = JSON.parse(requestBody)
+            schema.db.documentsData.remove({ id })
             return true
         },
     )
 
     server.get(`${apiPrefix}/sales/document`, (schema, { queryParams }) => {
-        const documentId = queryParams.documentId
-        const document = schema.db.documentsData.find(documentId as string)
+        const id = queryParams.id
+        const document = schema.db.documentsData.find(id as string)
         return document
     })
 
@@ -131,8 +131,8 @@ export default function salesFakeApi(server: Server, apiPrefix: string) {
         `${apiPrefix}/sales/documents/update`,
         (schema, { requestBody }) => {
             const data = JSON.parse(requestBody)
-            const { documentId } = data
-            schema.db.documentsData.update({ documentId }, data)
+            const { id } = data
+            schema.db.documentsData.update({ id }, data)
             return true
         },
     )

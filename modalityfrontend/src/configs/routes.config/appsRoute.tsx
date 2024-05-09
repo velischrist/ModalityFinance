@@ -102,7 +102,7 @@ const appsRoute: Routes = [
     },
     {
         key: 'appsSales.documentEdit',
-        path: `${APP_PREFIX_PATH}/documents/document-edit/:documentId`,
+        path: `${APP_PREFIX_PATH}/documents/document-edit/:id`,
         component: lazy(() => import('@/views/documents/DocumentEdit')),
         authority: [ADMIN, USER],
     },
@@ -111,9 +111,9 @@ const appsRoute: Routes = [
         path: `${APP_PREFIX_PATH}/companies/company-new`,
         component: lazy(() => import('@/views/companies/CompanyNew')),
         authority: [ADMIN, USER],
-        meta: {
-            header: 'Add New Company',
-        },
+        // meta: {
+        //     header: 'Add New Company',
+        // },
     },
     {
         key: 'appsSales.documentNew',

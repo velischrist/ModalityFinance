@@ -23,40 +23,41 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Document = {
-    documentId: string
+    id: string
     documentName: string
     uploadedAt: string
     // status: string
     // industry: string
     // investedAt: string
     // amountInvested: number
-    status: number
+    status: string
+    type: string
 }
 
-const inventoryStatusColor: Record<
-    number,
-    {
-        label: string
-        dotClass: string
-        textClass: string
-    }
-> = {
-    0: {
-        label: 'Mapped',
-        dotClass: 'bg-emerald-500',
-        textClass: 'text-emerald-500',
-    },
-    1: {
-        label: 'Mapping Pending',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
-    },
-    2: {
-        label: 'Error',
-        dotClass: 'bg-red-500',
-        textClass: 'text-red-500',
-    },
-}
+// const inventoryStatusColor: Record<
+//     string,
+//     {
+//         label: string
+//         dotClass: string
+//         textClass: string
+//     }
+// > = {
+//     mapped: {
+//         label: 'mapped',
+//         dotClass: 'bg-emerald-500',
+//         textClass: 'text-emerald-500',
+//     },
+//     mappingpending: {
+//         label: 'mappingpending',
+//         dotClass: 'bg-amber-500',
+//         textClass: 'text-amber-500',
+//     },
+//     error: {
+//         label: 'Error',
+//         dotClass: 'bg-red-500',
+//         textClass: 'text-red-500',
+//     },
+// }
 
 const ActionColumn = ({ row }: { row: Document }) => {
     const dispatch = useAppDispatch()
@@ -64,12 +65,12 @@ const ActionColumn = ({ row }: { row: Document }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/app/documents/document-edit/${row.documentId}`)
+        navigate(`/app/documents/document-edit/${row.id}`)
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedDocument(row.documentId))
+        dispatch(setSelectedDocument(row.id))
     }
 
     return (
@@ -155,28 +156,46 @@ const DocumentTable = () => {
                 accessorKey: 'documentName',
                 cell: (props) => {
                     const row = props.row.original
+
                     return <DocumentColumn row={row} />
+                },
+            },
+            // {
+            //     header: 'Status',
+            //     accessorKey: 'status',
+            //     cell: (props) => {
+            //         const { status } = props.row.original
+
+            //         return (
+            //             <div className="flex items-center gap-2">
+            //                 <Badge
+            //                     className={
+            //                         inventoryStatusColor[status].dotClass
+            //                     }
+            //                 />
+            //                 <span
+            //                     className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
+            //                 >
+            //                     {inventoryStatusColor[status].label}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
+            {
+                header: 'Type',
+                accessorKey: 'type',
+                cell: (props) => {
+                    const row = props.row.original
+                    return <span className="capitalize">{row.type}</span>
                 },
             },
             {
                 header: 'Status',
                 accessorKey: 'status',
                 cell: (props) => {
-                    const { status } = props.row.original
-                    return (
-                        <div className="flex items-center gap-2">
-                            <Badge
-                                className={
-                                    inventoryStatusColor[status].dotClass
-                                }
-                            />
-                            <span
-                                className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
-                            >
-                                {inventoryStatusColor[status].label}
-                            </span>
-                        </div>
-                    )
+                    const row = props.row.original
+                    return <span className="capitalize">{row.status}</span>
                 },
             },
             // {

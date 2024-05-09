@@ -18,10 +18,12 @@ import * as Yup from 'yup'
 type FormikRef = FormikProps<any>
 
 type InitialData = {
-    documentId?: string
+    id?: string
     documentName?: string
-    status?: number
+    status?: string
+    type?: string
     uploadedAt?: string
+    file?: File | undefined
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
@@ -47,7 +49,8 @@ const { useUniqueId } = hooks
 const validationSchema = Yup.object().shape({
     documentName: Yup.string().required('Document Name is required'),
     uploadedAt: Yup.string().required('Date is required'),
-    status: Yup.number().required('Status is required'),
+    status: Yup.string().required('Status is required'),
+    type: Yup.string().required('Type is required'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
@@ -98,13 +101,17 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
 }
 
 const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
+    const currentDate = new Date().toISOString()
     const {
         type,
         initialData = {
-            documentId: '',
+            id: '',
             documentName: '',
-            status: [],
-            uploadedAt: '',
+            status: 'Mapping Pending',
+            type: 'Unspecified',
+            uploadedAt: currentDate,
+            file: null,
+            // document: null,
         },
         onFormSubmit,
         onDiscard,
@@ -125,7 +132,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                     const formData = cloneDeep(values)
 
                     if (type === 'new') {
-                        formData.documentId = newId
+                        formData.id = newId
                     }
                     onFormSubmit?.(formData, setSubmitting)
                 }}

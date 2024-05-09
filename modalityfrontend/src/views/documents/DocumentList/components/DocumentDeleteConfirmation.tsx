@@ -27,7 +27,7 @@ const DocumentDeleteConfirmation = () => {
 
     const onDelete = async () => {
         dispatch(toggleDeleteConfirmation(false))
-        const success = await deleteDocument({ documentId: selectedDocument })
+        const success = await deleteDocument({ id: selectedDocument })
 
         if (success) {
             dispatch(getDocuments(tableData))

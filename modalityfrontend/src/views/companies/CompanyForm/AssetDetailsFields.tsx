@@ -4,6 +4,7 @@ import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import CreatableSelect from 'react-select/creatable'
 import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
+import HeaderGoBack from '../CompanyEdit/headercompanyedit'
 
 type Options = {
     label: string
@@ -60,8 +61,10 @@ const AssetDetailsFields = (props: AssetDetailsFieldsProps) => {
 
     return (
         <AdaptableCard divider className="mb-4">
+            <HeaderGoBack></HeaderGoBack>
+            <h3 className="mb-5 lg:mb-5">Add New Company</h3>
             <h5>Asset Details</h5>
-            <p className="mb-6">Add the asset's details</p>
+            <p className="mb-6">Add the company's details</p>
 
             <FormItem
                 label="Company Name"
