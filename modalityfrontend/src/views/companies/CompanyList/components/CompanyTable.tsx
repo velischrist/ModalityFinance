@@ -27,12 +27,6 @@ type Company = {
     companyname: string
     location: string
     industry: string
-<<<<<<< HEAD
-=======
-    // investedAt: string
-    // amountInvested: number
-    // status: number
->>>>>>> 750ae0f (Documents pages)
 }
 
 const ActionColumn = ({ row }: { row: Company }) => {
