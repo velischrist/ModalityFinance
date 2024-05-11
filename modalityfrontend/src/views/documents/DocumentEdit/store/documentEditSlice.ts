@@ -6,11 +6,12 @@ import {
 } from '@/services/SalesService'
 
 type DocumentData = {
-    id?: string
-    documentName?: string
+    id?: number
+    documentname?: string
     status?: string
     type?: string
     uploadedAt?: string
+    companyid?: number
 }
 
 export type SalesDocumentEditState = {
@@ -24,10 +25,10 @@ export const SLICE_NAME = 'salesDocumentEdit'
 
 export const getDocument = createAsyncThunk(
     SLICE_NAME + '/getDocuments',
-    async (data: { id: string }) => {
+    async (data: { id: number }) => {
         const response = await apiGetSalesDocument<
             GetSalesDocumentResponse,
-            { id: string }
+            { id: number }
         >(data)
         return response.data
     },
@@ -40,7 +41,7 @@ export const updateDocument = async <T, U extends Record<string, unknown>>(
     return response.data
 }
 
-export const deleteDocument = async <T, U extends Record<string, unknown>>(
+export const deleteDocument = async <T, U extends { id: number }>(
     data: U,
 ) => {
     const response = await apiDeleteSalesDocuments<T, U>(data)

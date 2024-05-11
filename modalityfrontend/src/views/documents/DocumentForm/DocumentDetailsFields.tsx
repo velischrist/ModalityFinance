@@ -46,10 +46,11 @@ const FileFormItem = ({ field, form }: FieldProps) => {
 
 type FormFieldsName = {
     uploadedAt: string
-    documentName: string
+    documentname: string
     status: string
     type: string
     file: File | undefined
+    companyid: number
 }
 
 type DocumentDetailsFieldsProps = {
@@ -107,14 +108,14 @@ const DocumentDetailsFields = (props: DocumentDetailsFieldsProps) => {
             <FormItem
                 label="Document Name"
                 invalid={
-                    (errors.documentName && touched.documentName) as boolean
+                    (errors.documentname && touched.documentname) as boolean
                 }
-                errorMessage={errors.documentName}
+                errorMessage={errors.documentname}
             >
                 <Field
                     type="text"
                     autoComplete="off"
-                    name="documentName"
+                    name="documentname"
                     placeholder="Document Name"
                     component={Input}
                 />

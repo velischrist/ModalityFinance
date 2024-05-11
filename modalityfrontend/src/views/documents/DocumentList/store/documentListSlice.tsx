@@ -7,10 +7,11 @@ import type { TableQueries } from '@/@types/common'
 
 type Document = {
     id: string
-    documentName: string
+    documentname: string
     uploadedAt: string
     status: string
     type: string
+    companyid: number
 }
 
 type Documents = Document[]
@@ -21,16 +22,17 @@ type GetSalesDocumentsResponse = {
 }
 
 type FilterQueries = {
-    documentName: string
+    documentname: string
     status: string
     type: string
     uploadedAt: string
+    companyid: number
 }
 
 export type SalesDocumentListState = {
     loading: boolean
     deleteConfirmation: boolean
-    selectedDocument: string
+    selectedDocument: number
     tableData: TableQueries
     filterData: FilterQueries
     documentList: Document[]
@@ -51,10 +53,10 @@ export const getDocuments = createAsyncThunk(
     },
 )
 
-export const deleteDocument = async (data: { id: string | string[] }) => {
+export const deleteDocument = async (data: { id: number }) => {
     const response = await apiDeleteSalesDocuments<
         boolean,
-        { id: string | string[] }
+        { id: number }
     >(data)
     return response.data
 }
@@ -73,14 +75,15 @@ export const initialTableData: TableQueries = {
 const initialState: SalesDocumentListState = {
     loading: false,
     deleteConfirmation: false,
-    selectedDocument: '',
+    selectedDocument: -1,
     documentList: [],
     tableData: initialTableData,
     filterData: {
-        documentName: '',
+        documentname: '',
         status: '',
         type: '',
         uploadedAt: '',
+        companyid: -1
     },
 }
 

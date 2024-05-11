@@ -17,10 +17,11 @@ import { Field, Form, Formik, FormikProps, FieldProps } from 'formik'
 import type { MouseEvent } from 'react'
 
 type FormModel = {
-    documentName: string
+    documentname: string
     status: string
     type: string
     uploadedAt: string
+    companyid: number
 }
 
 type FilterFormProps = {
@@ -60,9 +61,9 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                         <FormContainer>
                             <FormItem
                                 invalid={
-                                    errors.documentName && touched.documentName
+                                    errors.documentname && touched.documentname
                                 }
-                                errorMessage={errors.documentName}
+                                errorMessage={errors.documentname}
                             >
                                 <h6 className="mb-4">Included text</h6>
                                 <Field

@@ -1,7 +1,7 @@
 import Button from '@/components/ui/Button'
 import { HiDownload, HiPlusCircle } from 'react-icons/hi'
 import CompanyTableSearch from './CompanyTableSearch'
-// import CompanyFilter from './CompanyFilter'
+import CompanyFilter from './CompanyFilter'
 import { Link } from 'react-router-dom'
 
 const CompanyTableTools = () => {

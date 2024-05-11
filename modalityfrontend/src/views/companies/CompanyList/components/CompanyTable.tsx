@@ -173,7 +173,6 @@ const CompanyTable = () => {
         dispatch(setTableData(newTableData))
     }
 
-    console.log(data)
     return (
         <>
             <DataTable

@@ -42,7 +42,7 @@ const DocumentEdit = () => {
         (state) => state.salesDocumentEdit.data.loading,
     )
 
-    const fetchData = (data: { id: string }) => {
+    const fetchData = (data: { id: number }) => {
         dispatch(getDocument(data))
     }
 
@@ -64,9 +64,10 @@ const DocumentEdit = () => {
 
     const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
         setDialogOpen(false)
-        const success = await deleteDocument({
-            id: documentData.id,
-        })
+        const success = 0
+        if (typeof documentData.id !== 'undefined') {
+            const success = await deleteDocument({ id: documentData.id })
+        }
         if (success) {
             popNotification('deleted')
         }
@@ -89,9 +90,9 @@ const DocumentEdit = () => {
     }
 
     useEffect(() => {
-        const path = location.pathname.substring(
+        const path = parseInt(location.pathname.substring(
             location.pathname.lastIndexOf('/') + 1,
-        )
+        ))
         const rquestParam = { id: path }
         fetchData(rquestParam)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,10 +104,10 @@ const DocumentEdit = () => {
                 {!isEmpty(documentData) && (
                     <>
                         <div>
-                            {/* <h3>{documentData.name}</h3> */}
+                            {/* <h3>{documentData.documentname}</h3> */}
                             <HeaderGoBack></HeaderGoBack>
                             <h3 className="mb-5 lg:mb-5">
-                                {documentData.documentName}
+                                {documentData.documentname}
                             </h3>
                             <DocumentForm
                                 type="edit"
@@ -116,15 +117,6 @@ const DocumentEdit = () => {
                                 onDelete={handleDelete}
                             />
                         </div>
-
-                        {/* <h3>{documentData.name}</h3>
-                        <DocumentForm
-                            type="edit"
-                            initialData={documentData}
-                            onFormSubmit={handleFormSubmit}
-                            onDiscard={handleDiscard}
-                            onDelete={handleDelete}
-                        /> */}
                     </>
                 )}
             </Loading>

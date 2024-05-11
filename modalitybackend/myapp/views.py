@@ -1,7 +1,12 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc, Document
 from .serializers import CompanySerializer, FundSerializer, LpSerializer, FundraiseSerializer, InvestmentSerializer, AgreementSerializer, FinancialDocSerializer, ReportDocSerializer, DocumentSerializer
+from .helperfunctions import paginate, wild_card_search
+from django.views.decorators.http import require_http_methods
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from rest_framework.decorators import api_view
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
@@ -38,3 +43,83 @@ class ReportDocViewSet(viewsets.ModelViewSet):
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+
+@api_view(['POST'])
+def get_companies_paginated(request):
+    try:
+        body = json.loads(request.body)
+        page_index = body.get('pageIndex', 1)
+        page_size = body.get('pageSize', 10)
+        sort = body.get('sort', {})
+        query = body.get('query', '')
+        order = sort.get('order', 'asc')
+        key = sort.get('key', 'companyid')  # Default sorting by the 'companyid' field
+        
+        # Fetching the company data
+        companies = list(Company.objects.all().values())
+
+        # Filtering non-callable and non-private attributes (sanitize)
+        companies = [company for company in companies if isinstance(company, dict)]
+
+        # Sorting the data
+        if key in ['companyname', 'industry', 'location'] and order:
+            companies.sort(key=lambda x: x[key].upper(), reverse=(order == 'desc'))
+        else:
+            companies.sort(key=lambda x: int(x['companyid']), reverse=(order == 'desc'))
+        
+        # Searching with a wildcard - simplistic implementation
+        if query:
+            companies = wild_card_search(companies, query)
+        
+        # Paginate
+        data = paginate(companies, page_size, page_index) 
+        
+        # Response
+        response_data = {
+            'data': data,
+            'total': len(companies),
+        }
+        return JsonResponse(response_data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    
+
+@api_view(['POST'])
+def get_documents_paginated(request):
+    try:
+        body = json.loads(request.body)
+        page_index = body.get('pageIndex', 1)
+        page_size = body.get('pageSize', 10)
+        sort = body.get('sort', {})
+        query = body.get('query', '')
+        order = sort.get('order', 'asc')
+        key = sort.get('key', 'id')  # Default sorting by the 'companyid' field
+        
+        # Fetching the company data
+        documents = list(Document.objects.all().values())
+
+        # Filtering non-callable and non-private attributes (sanitize)
+        documents = [document for document in documents if isinstance(document, dict)]
+
+        # Sorting the data
+        if key in ['documentname', 'type'] and order:
+            documents.sort(key=lambda x: x[key].upper(), reverse=(order == 'desc'))
+        else:
+            documents.sort(key=lambda x: int(x['id']), reverse=(order == 'desc'))
+        
+        # Searching with a wildcard - simplistic implementation
+        if query:
+            documents = wild_card_search(documents, query)
+        
+        # Paginate
+        data = paginate(documents, page_size, page_index) 
+        
+        # Response
+        response_data = {
+            'data': data,
+            'total': len(documents),
+        }
+        return JsonResponse(response_data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+

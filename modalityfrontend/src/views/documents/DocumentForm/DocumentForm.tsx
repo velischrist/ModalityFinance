@@ -5,10 +5,7 @@ import hooks from '@/components/ui/hooks'
 import StickyFooter from '@/components/shared/StickyFooter'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import { Form, Formik, FormikProps } from 'formik'
-import BasicInformationFields from './BasicInformationFields'
-// import PricingFields from './PricingFields'
 import DocumentDetailsFields from './DocumentDetailsFields'
-// import ProductImages from './ProductImages'
 import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
@@ -18,16 +15,17 @@ import * as Yup from 'yup'
 type FormikRef = FormikProps<any>
 
 type InitialData = {
-    id?: string
-    documentName?: string
+    id?: number
+    documentname?: string
     status?: string
     type?: string
     uploadedAt?: string
-    file?: File | undefined
+    file?: File
+    companyid?: number
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
-    tags: { label: string; value: string }[] | string[]
+    tags: { label: string; value: string }[] | string[] | { label: string; value: number }[] | { label: string; value: File }[]
 }
 
 export type SetSubmitting = (isSubmitting: boolean) => void
@@ -47,7 +45,7 @@ type ProductForm = {
 const { useUniqueId } = hooks
 
 const validationSchema = Yup.object().shape({
-    documentName: Yup.string().required('Document Name is required'),
+    documentname: Yup.string().required('Document Name is required'),
     uploadedAt: Yup.string().required('Date is required'),
     status: Yup.string().required('Status is required'),
     type: Yup.string().required('Type is required'),
@@ -106,7 +104,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
         type,
         initialData = {
             id: '',
-            documentName: '',
+            documentname: '',
             status: 'Mapping Pending',
             type: 'Unspecified',
             uploadedAt: currentDate,
@@ -118,7 +116,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
         onDelete,
     } = props
 
-    const newId = useUniqueId('product-')
+    const newId = parseInt(useUniqueId('product-'))
 
     return (
         <>
@@ -146,17 +144,12 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                     touched={touched}
                                     errors={errors}
                                 /> */}
-                                <DocumentDetailsFields
+                                {/* <DocumentDetailsFields
                                     touched={touched}
                                     errors={errors}
                                     values={values}
-                                />
-                                {/* <Instruments></Instruments> */}
-
-                                {/* <PricingFields
-                                    touched={touched}
-                                    errors={errors}
                                 /> */}
+
                             </div>
                             {/* <div className="lg:col-span-1">
                                     <ProductImages values={values} />

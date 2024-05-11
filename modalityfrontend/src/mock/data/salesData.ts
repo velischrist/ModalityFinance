@@ -161,14 +161,14 @@ export const companiesData = [
 export const documentsData = [
     {
         id: '15',
-        documentName: 'Financials1 2023',
+        documentname: 'Financials1 2023',
         status: 'Mapping Pending',
         type: 'P&L Annual',
         uploadedAt: '02/02/2004',
     },
     {
         id: '16',
-        documentName: 'Financials 2023',
+        documentname: 'Financials 2023',
         status: 'Mapped',
         type: 'Monthly Report',
         uploadedAt: '02/02/2004',

@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             name='Document',
             fields=[
                 ('documentid', models.AutoField(db_column='DocumentID', primary_key=True, serialize=False)),
-                ('documentname', models.CharField(db_column='DocumentName', max_length=255)),
+                ('documentname', models.CharField(db_column='documentname', max_length=255)),
                 ('type', models.CharField(blank=True, db_column='Type', max_length=100, null=True)),
                 ('isprocessed', models.IntegerField(db_column='IsProcessed')),
                 ('uploaded_at', models.DateTimeField(auto_now_add=True, db_column='DateUploaded')),

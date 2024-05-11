@@ -23,41 +23,13 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Document = {
-    id: string
-    documentName: string
+    id: number
+    documentname: string
     uploadedAt: string
-    // status: string
-    // industry: string
-    // investedAt: string
-    // amountInvested: number
     status: string
     type: string
+    companyid: number
 }
-
-// const inventoryStatusColor: Record<
-//     string,
-//     {
-//         label: string
-//         dotClass: string
-//         textClass: string
-//     }
-// > = {
-//     mapped: {
-//         label: 'mapped',
-//         dotClass: 'bg-emerald-500',
-//         textClass: 'text-emerald-500',
-//     },
-//     mappingpending: {
-//         label: 'mappingpending',
-//         dotClass: 'bg-amber-500',
-//         textClass: 'text-amber-500',
-//     },
-//     error: {
-//         label: 'Error',
-//         dotClass: 'bg-red-500',
-//         textClass: 'text-red-500',
-//     },
-// }
 
 const ActionColumn = ({ row }: { row: Document }) => {
     const dispatch = useAppDispatch()
@@ -102,7 +74,7 @@ const DocumentColumn = ({ row }: { row: Document }) => {
         <div className="flex items-center">
             {/* {avatar} */}
             <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                {row.documentName}
+                {row.documentname}
             </span>
         </div>
     )
@@ -153,7 +125,7 @@ const DocumentTable = () => {
         () => [
             {
                 header: 'Document Name',
-                accessorKey: 'documentName',
+                accessorKey: 'documentname',
                 cell: (props) => {
                     const row = props.row.original
 

@@ -5,6 +5,7 @@ import {
 } from '@/services/SalesService'
 import type { TableQueries } from '@/@types/common'
 import paginate from '@/utils/paginate'
+import CompanyList from '../CompanyList'
 
 type Company = {
     companyid: number
@@ -34,7 +35,7 @@ export type SalesCompanyListState = {
     selectedCompany: number
     tableData: TableQueries
     filterData: FilterQueries
-    companyList: GetSalesCompaniesResponse
+    companyList: Companies
 }
 
 type GetSalesCompaniesRequest = TableQueries & { filterData?: FilterQueries }
@@ -48,7 +49,7 @@ export const getCompanies = createAsyncThunk(
             GetSalesCompaniesResponse,
             GetSalesCompaniesRequest
         >(data)
-        console.log('API Data:', response);
+        console.log('API Data:', response.data);
         return response.data;
     },
 )
@@ -62,7 +63,7 @@ export const deleteCompany = async (data: { companyid: number }) => {
 }
 
 export const initialTableData: TableQueries = {
-    total: 10,
+    total: 0,
     pageIndex: 1,
     pageSize: 10,
     query: '',
@@ -75,8 +76,8 @@ export const initialTableData: TableQueries = {
 const initialState: SalesCompanyListState = {
     loading: false,
     deleteConfirmation: false,
-    selectedCompany: -1,
-    companyList: {data: [], total: 0},
+    selectedCompany: 0,
+    companyList: [],
     tableData: initialTableData,
     filterData: {
         companyname: '',
@@ -108,7 +109,7 @@ const companyListSlice: Slice<SalesCompanyListState> = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getCompanies.fulfilled, (state, action) => {
-                state.companyList = action.payload
+                state.companyList = action.payload.data
                 state.tableData.total = action.payload.total
                 state.loading = false
             })

@@ -93,13 +93,13 @@ class ReportDoc(models.Model):
 
 
 class Document(models.Model):
-    documentid = models.AutoField(db_column='DocumentID', primary_key=True) 
+    id = models.AutoField(db_column='DocumentID', primary_key=True) 
     documentname = models.CharField(db_column='DocumentName', max_length=255)
     documentpath = models.FileField(db_column='DocumentPath', null=True)
     companyid = models.ForeignKey(Company, models.DO_NOTHING, db_column='CompanyID', blank=True, null=True)
     type = models.CharField(db_column='Type', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    isprocessed = models.IntegerField(db_column='IsProcessed')  # Field name made lowercase.
-    uploaded_at = models.DateTimeField(db_column='DateUploaded', auto_now_add=True)  # Field name made lowercase.
+    status = models.CharField(db_column='Status', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    uploadedAt = models.DateTimeField(db_column='DateUploaded', auto_now_add=True)  # Field name made lowercase.
 
     class Meta:
         managed = True

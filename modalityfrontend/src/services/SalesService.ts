@@ -1,13 +1,24 @@
 import ApiService from './ApiService'
 
+// export async function apiGetSalesCompanies<
+//     T,
+//     U extends Record<string, unknown>,
+// >(params: U) {
+//     return ApiService.fetchData<T>({
+//         url: 'http://localhost:8000/api/companies',
+//         method: 'get',
+//         params,
+//     })
+// }
+
 export async function apiGetSalesCompanies<
     T,
     U extends Record<string, unknown>,
->(params: U) {
+>(data: U) {
     return ApiService.fetchData<T>({
-        url: 'http://localhost:8000/api/companies',
-        method: 'get',
-        params,
+        url: 'http://localhost:8000/api/companiesp/',
+        method: 'post',
+        data,
     })
 }
 
@@ -57,7 +68,7 @@ export async function apiGetSalesDocuments<
     U extends Record<string, unknown>,
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: 'http://localhost:8000/api/documents/',
+        url: 'http://localhost:8000/api/documentsp/',
         method: 'post',
         data,
     })
@@ -65,30 +76,30 @@ export async function apiGetSalesDocuments<
 
 export async function apiDeleteSalesDocuments<
     T,
-    U extends { documentid: number },
+    U extends { id: number },
 >(data: U) {
     return ApiService.fetchData<T>({
-        url: `http://localhost:8000/api/documents/${data.documentid}/`,
+        url: `http://localhost:8000/api/documents/${data.id}/`,
         method: 'delete',
         data,
     })
 }
 
-export async function apiGetSalesDocument<T, U extends { documentid: number }>(
+export async function apiGetSalesDocument<T, U extends { id: number }>(
     params: U,
 ) {
     return ApiService.fetchData<T>({
-        url: `http://localhost:8000/api/documents/${params.documentid}/`,
+        url: `http://localhost:8000/api/documents/${params.id}/`,
         method: 'get',
         params,
     })
 }
 
-export async function apiPutSalesDocument<T, U extends { documentid: number }>(
+export async function apiPutSalesDocument<T, U extends Record<string, unknown>>(
     data: U,
 ) {
     return ApiService.fetchData<T>({
-        url: `http://localhost:8000/api/documents/${data.documentid}/`,
+        url: `http://localhost:8000/api/documents/${data.id}/`,
         method: 'put',
         data,
     })
