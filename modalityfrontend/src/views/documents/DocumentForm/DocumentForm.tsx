@@ -21,11 +21,15 @@ type InitialData = {
     type?: string
     uploadedAt?: string
     file?: File
-    companyid?: number
+    // companyid?: number
 }
 
 export type FormModel = Omit<InitialData, 'tags'> & {
-    tags: { label: string; value: string }[] | string[] | { label: string; value: number }[] | { label: string; value: File }[]
+    tags:
+        | { label: string; value: string }[]
+        | string[]
+        | { label: string; value: number }[]
+        | { label: string; value: File }[]
 }
 
 export type SetSubmitting = (isSubmitting: boolean) => void
@@ -149,7 +153,6 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                     errors={errors}
                                     values={values}
                                 /> */}
-
                             </div>
                             {/* <div className="lg:col-span-1">
                                     <ProductImages values={values} />

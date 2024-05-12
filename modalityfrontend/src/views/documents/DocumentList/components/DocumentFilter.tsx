@@ -21,7 +21,7 @@ type FormModel = {
     status: string
     type: string
     uploadedAt: string
-    companyid: number
+    // companyid: number
 }
 
 type FilterFormProps = {
