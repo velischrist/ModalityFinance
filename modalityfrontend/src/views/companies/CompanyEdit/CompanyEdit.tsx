@@ -22,7 +22,7 @@ import CompanyForm, {
     OnDeleteCallback,
 } from '@/views/companies/CompanyForm'
 import isEmpty from 'lodash/isEmpty'
-// import Size from '@/views/documents/DocumentMapping/documentMapping'
+import Size from '@/views/documents/DocumentMapping/documentMapping'
 
 const { TabNav, TabList, TabContent } = Tabs
 
@@ -125,7 +125,9 @@ const CompanyEdit = () => {
                                 <div className="p-4">
                                     <TabContent value="tab1">
                                         {/* <Size></Size> */}
-                                        <DocumentList></DocumentList>
+                                        <DocumentList
+                                            companyid={companyData.companyid}
+                                        />
                                     </TabContent>
                                     <TabContent value="tab2">
                                         <CompanyForm

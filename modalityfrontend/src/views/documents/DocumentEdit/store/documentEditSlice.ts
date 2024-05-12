@@ -41,9 +41,7 @@ export const updateDocument = async <T, U extends Record<string, unknown>>(
     return response.data
 }
 
-export const deleteDocument = async <T, U extends { id: number }>(
-    data: U,
-) => {
+export const deleteDocument = async <T, U extends { id: number }>(data: U) => {
     const response = await apiDeleteSalesDocuments<T, U>(data)
     return response.data
 }

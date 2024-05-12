@@ -90,9 +90,9 @@ const DocumentEdit = () => {
     }
 
     useEffect(() => {
-        const path = parseInt(location.pathname.substring(
-            location.pathname.lastIndexOf('/') + 1,
-        ))
+        const path = parseInt(
+            location.pathname.substring(location.pathname.lastIndexOf('/') + 1),
+        )
         const rquestParam = { id: path }
         fetchData(rquestParam)
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -50,7 +50,7 @@ type FormFieldsName = {
     status: string
     type: string
     file: File | undefined
-    companyid: number
+    // companyid: number
 }
 
 type DocumentDetailsFieldsProps = {

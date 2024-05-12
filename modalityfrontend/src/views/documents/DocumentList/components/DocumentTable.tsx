@@ -28,7 +28,11 @@ type Document = {
     uploadedAt: string
     status: string
     type: string
-    companyid: number
+    // companyid: number
+}
+
+type DocumentTableProps = {
+    companyid: number | undefined // Define the companyId prop type
 }
 
 const ActionColumn = ({ row }: { row: Document }) => {
@@ -79,8 +83,7 @@ const DocumentColumn = ({ row }: { row: Document }) => {
         </div>
     )
 }
-
-const DocumentTable = () => {
+const DocumentTable: React.FC<DocumentTableProps> = ({ companyid }) => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
     const dispatch = useAppDispatch()
@@ -104,7 +107,7 @@ const DocumentTable = () => {
     useEffect(() => {
         fetchData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageIndex, pageSize, sort])
+    }, [pageIndex, pageSize, sort, companyid])
 
     useEffect(() => {
         if (tableRef) {
@@ -118,7 +121,16 @@ const DocumentTable = () => {
     )
 
     const fetchData = () => {
-        dispatch(getDocuments({ pageIndex, pageSize, sort, query, filterData }))
+        dispatch(
+            getDocuments({
+                pageIndex,
+                pageSize,
+                sort,
+                query,
+                filterData,
+                companyid,
+            }),
+        )
     }
 
     const columns: ColumnDef<Document>[] = useMemo(

@@ -11,7 +11,7 @@ type Document = {
     uploadedAt: string
     status: string
     type: string
-    companyid: number
+    // companyid: number
 }
 
 type Documents = Document[]
@@ -26,7 +26,7 @@ type FilterQueries = {
     status: string
     type: string
     uploadedAt: string
-    companyid: number
+    // companyid: number
 }
 
 export type SalesDocumentListState = {
@@ -37,8 +37,10 @@ export type SalesDocumentListState = {
     filterData: FilterQueries
     documentList: Document[]
 }
-
-type GetSalesDocumentsRequest = TableQueries & { filterData?: FilterQueries }
+type GetSalesDocumentsRequest = TableQueries & {
+    filterData?: FilterQueries
+    companyid?: number
+}
 
 export const SLICE_NAME = 'salesDocumentList'
 
@@ -54,10 +56,9 @@ export const getDocuments = createAsyncThunk(
 )
 
 export const deleteDocument = async (data: { id: number }) => {
-    const response = await apiDeleteSalesDocuments<
-        boolean,
-        { id: number }
-    >(data)
+    const response = await apiDeleteSalesDocuments<boolean, { id: number }>(
+        data,
+    )
     return response.data
 }
 
@@ -83,7 +84,7 @@ const initialState: SalesDocumentListState = {
         status: '',
         type: '',
         uploadedAt: '',
-        companyid: -1
+        companyid: -1,
     },
 }
 
