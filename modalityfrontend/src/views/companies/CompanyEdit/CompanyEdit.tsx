@@ -22,7 +22,7 @@ import CompanyForm, {
     OnDeleteCallback,
 } from '@/views/companies/CompanyForm'
 import isEmpty from 'lodash/isEmpty'
-import Size from '@/views/documents/DocumentMapping/documentMapping'
+// import Size from '@/views/documents/DocumentMapping/documentMapping'
 
 const { TabNav, TabList, TabContent } = Tabs
 

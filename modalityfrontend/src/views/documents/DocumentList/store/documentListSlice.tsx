@@ -83,8 +83,7 @@ const initialState: SalesDocumentListState = {
         documentname: '',
         status: '',
         type: '',
-        uploadedAt: '',
-        companyid: -1,
+        uploadedAt: ''
     },
 }
 

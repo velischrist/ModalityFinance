@@ -93,13 +93,18 @@ def get_documents_paginated(request):
         sort = body.get('sort', {})
         query = body.get('query', '')
         order = sort.get('order', 'asc')
-        key = sort.get('key', 'id')  # Default sorting by the 'companyid' field
+        key = sort.get('key', 'id')  # Default sorting by the 'id' field
+        companyid = body.get('companyid', 0)
         
         # Fetching the company data
         documents = list(Document.objects.all().values())
+        print(documents)
 
         # Filtering non-callable and non-private attributes (sanitize)
         documents = [document for document in documents if isinstance(document, dict)]
+
+        documents = [document for document in documents if document['companyid_id'] == companyid]
+        print(len(documents))
 
         # Sorting the data
         if key in ['documentname', 'type'] and order:

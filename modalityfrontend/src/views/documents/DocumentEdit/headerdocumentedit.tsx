@@ -7,7 +7,7 @@ const HeaderGoBack = () => {
     const navigate = useNavigate()
 
     const handleGoBack = () => {
-        navigate('/companies/company-edit/:companyId')
+        navigate('/companies/company-edit/:companyid')
     }
 
     return (
