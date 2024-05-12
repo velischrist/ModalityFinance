@@ -107,6 +107,12 @@ const appsRoute: Routes = [
         authority: [ADMIN, USER],
     },
     {
+        key: 'appsSales.documentMapping',
+        path: `${APP_PREFIX_PATH}/documents/document-mapping/:id`,
+        component: lazy(() => import('@/views/documents/DocumentMapping')),
+        authority: [ADMIN, USER],
+    },
+    {
         key: 'appsSales.companyNew',
         path: `${APP_PREFIX_PATH}/companies/company-new`,
         component: lazy(() => import('@/views/companies/CompanyNew')),

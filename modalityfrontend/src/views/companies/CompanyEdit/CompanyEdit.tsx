@@ -22,6 +22,7 @@ import CompanyForm, {
     OnDeleteCallback,
 } from '@/views/companies/CompanyForm'
 import isEmpty from 'lodash/isEmpty'
+// import Size from '@/views/documents/DocumentMapping/documentMapping'
 
 const { TabNav, TabList, TabContent } = Tabs
 
@@ -62,9 +63,11 @@ const CompanyEdit = () => {
 
     const handleDelete = async (setDialogOpen: OnDeleteCallback) => {
         setDialogOpen(false)
-        const success = 0;
+        const success = 0
         if (typeof companyData.companyid !== 'undefined') {
-            const success = await deleteCompany({ companyid: companyData.companyid })
+            const success = await deleteCompany({
+                companyid: companyData.companyid,
+            })
         }
         if (success) {
             popNotification('deleted')
@@ -88,7 +91,9 @@ const CompanyEdit = () => {
     }
 
     useEffect(() => {
-        const path = parseInt(location.pathname.substring(location.pathname.lastIndexOf('/') + 1))
+        const path = parseInt(
+            location.pathname.substring(location.pathname.lastIndexOf('/') + 1),
+        )
         console.log(path)
         const rquestParam = { companyid: path }
         fetchData(rquestParam)
@@ -119,6 +124,7 @@ const CompanyEdit = () => {
                                 </TabList>
                                 <div className="p-4">
                                     <TabContent value="tab1">
+                                        {/* <Size></Size> */}
                                         <DocumentList></DocumentList>
                                     </TabContent>
                                     <TabContent value="tab2">

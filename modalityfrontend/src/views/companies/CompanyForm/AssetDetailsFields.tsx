@@ -61,8 +61,8 @@ const AssetDetailsFields = (props: AssetDetailsFieldsProps) => {
 
     return (
         <AdaptableCard divider className="mb-4">
-            <HeaderGoBack></HeaderGoBack>
-            <h3 className="mb-5 lg:mb-5">Add New Company</h3>
+            {/* <HeaderGoBack></HeaderGoBack>
+            <h3 className="mb-5 lg:mb-5">Add New Company</h3> */}
             <h5>Asset Details</h5>
             <p className="mb-6">Add the company's details</p>
 
