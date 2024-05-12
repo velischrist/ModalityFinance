@@ -193,6 +193,7 @@ const DocumentDetailsFields = (props: DocumentDetailsFieldsProps) => {
                     component={Input}
                 />
             </FormItem>
+
         </AdaptableCard>
     )
 }

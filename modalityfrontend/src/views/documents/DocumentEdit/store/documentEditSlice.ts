@@ -11,7 +11,7 @@ type DocumentData = {
     status?: string
     type?: string
     uploadedAt?: string
-    // companyid?: number
+    companyid?: number
 }
 
 export type SalesDocumentEditState = {

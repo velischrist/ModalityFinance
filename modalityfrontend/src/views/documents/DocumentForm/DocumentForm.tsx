@@ -10,6 +10,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import { companiesData } from '@/mock/data/salesData'
 // import Instruments from './Instruments'
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
@@ -21,9 +22,11 @@ type InitialData = {
     type?: string
     uploadedAt?: string
     file?: File
-    // companyid?: number
+    companyid?: number
 }
-
+// type DocumentFormProps = {
+//     companyid: number | undefined // Define the companyId prop type
+// }
 export type FormModel = Omit<InitialData, 'tags'> & {
     tags:
         | { label: string; value: string }[]
@@ -33,6 +36,7 @@ export type FormModel = Omit<InitialData, 'tags'> & {
 }
 
 export type SetSubmitting = (isSubmitting: boolean) => void
+
 
 export type OnDeleteCallback = React.Dispatch<React.SetStateAction<boolean>>
 
@@ -44,6 +48,7 @@ type ProductForm = {
     onDiscard?: () => void
     onDelete?: OnDelete
     onFormSubmit: (formData: FormModel, setSubmitting: SetSubmitting) => void
+    companyid: number;
 }
 
 const { useUniqueId } = hooks
@@ -113,6 +118,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             type: 'Unspecified',
             uploadedAt: currentDate,
             file: null,
+            companyid: props.companyid
             // document: null,
         },
         onFormSubmit,
@@ -148,11 +154,12 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                     touched={touched}
                                     errors={errors}
                                 /> */}
-                                {/* <DocumentDetailsFields
+                                <DocumentDetailsFields
                                     touched={touched}
                                     errors={errors}
                                     values={values}
-                                /> */}
+                                    // setFieldValue={}
+                                />
                             </div>
                             {/* <div className="lg:col-span-1">
                                     <ProductImages values={values} />

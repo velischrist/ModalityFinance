@@ -15,7 +15,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ companyid }) => {
         <AdaptableCard className="h-full" bodyClass="h-full">
             <div className="lg:flex items-center justify-between mb-4">
                 <h5 className="mb-4 lg:mb-0">Documents</h5>
-                <DocumentTableTools />
+                <DocumentTableTools companyid={companyid}/>
             </div>
             <DocumentTable companyid={companyid} />
         </AdaptableCard>

@@ -123,7 +123,7 @@ const appsRoute: Routes = [
     },
     {
         key: 'appsSales.documentNew',
-        path: `${APP_PREFIX_PATH}/documents/document-new`,
+        path: `${APP_PREFIX_PATH}/documents/document-new/:companyid`,
         component: lazy(() => import('@/views/documents/DocumentNew')),
         authority: [ADMIN, USER],
         meta: {

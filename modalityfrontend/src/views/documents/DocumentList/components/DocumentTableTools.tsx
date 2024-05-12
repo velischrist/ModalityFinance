@@ -4,7 +4,12 @@ import DocumentTableSearch from './DocumentTableSearch'
 // import DocumentFilter from './DocumentFilter'
 import { Link } from 'react-router-dom'
 
-const DocumentTableTools = () => {
+type DocumentTableProps = {
+    companyid: number | undefined // Define the companyId prop type
+}
+
+const DocumentTableTools: React.FC<DocumentTableProps> = ({ companyid }) => {
+// const DocumentTableTools = () => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center">
             <DocumentTableSearch />
@@ -21,7 +26,8 @@ const DocumentTableTools = () => {
             </Link>
             <Link
                 className="block lg:inline-block md:mb-0 mb-4"
-                to="/app/documents/document-new"
+                // to="/app/documents/document-new/"
+                to={`/app/documents/document-new/${companyid}`}
             >
                 <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
                     Upload Document

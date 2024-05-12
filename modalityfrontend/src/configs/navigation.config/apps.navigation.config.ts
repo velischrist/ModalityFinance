@@ -190,7 +190,7 @@ const appsNavigationConfig: NavigationTree[] = [
                     },
                     {
                         key: 'appsSales.documentNew',
-                        path: `${APP_PREFIX_PATH}/documents/document-new`,
+                        path: `${APP_PREFIX_PATH}/documents/document-new/:companyid`,
                         title: 'New Document',
                         translateKey: 'nav.appsSales.documentNew',
                         icon: '',
