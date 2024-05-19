@@ -10,7 +10,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
-import { companiesData } from '@/mock/data/salesData'
+import { companiesData, documentsData } from '@/mock/data/salesData'
 // import Instruments from './Instruments'
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
@@ -18,6 +18,7 @@ type FormikRef = FormikProps<any>
 type InitialData = {
     id?: number
     documentname?: string
+    documentpath?: File | null
     status?: string
     type?: string
     uploadedAt?: string
@@ -48,7 +49,7 @@ type ProductForm = {
     onDiscard?: () => void
     onDelete?: OnDelete
     onFormSubmit: (formData: FormModel, setSubmitting: SetSubmitting) => void
-    companyid: number;
+    companyid?: number;
 }
 
 const { useUniqueId } = hooks
@@ -117,6 +118,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             status: 'Mapping Pending',
             type: 'Unspecified',
             uploadedAt: currentDate,
+            documentpath: null,
             file: null,
             companyid: props.companyid
             // document: null,
@@ -145,7 +147,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                     onFormSubmit?.(formData, setSubmitting)
                 }}
             >
-                {({ values, touched, errors, isSubmitting }) => (
+                {({ values, touched, errors, isSubmitting, setFieldValue }) => (
                     <Form>
                         <FormContainer>
                             {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-4"> */}
@@ -158,7 +160,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
                                     touched={touched}
                                     errors={errors}
                                     values={values}
-                                    // setFieldValue={}
+                                    setFieldValue={setFieldValue}
                                 />
                             </div>
                             {/* <div className="lg:col-span-1">

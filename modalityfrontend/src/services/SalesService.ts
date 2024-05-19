@@ -105,13 +105,14 @@ export async function apiPutSalesDocument<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function apiCreateSalesDocument<
-    T,
-    U extends Record<string, unknown>,
->(data: U) {
+export async function apiCreateSalesDocument<T, U extends FormData>(data: U) {
     return ApiService.fetchData<T>({
         url: 'http://localhost:8000/api/documents/',
         method: 'post',
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
         data,
     })
 }
+

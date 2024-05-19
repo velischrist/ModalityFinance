@@ -40,7 +40,7 @@ export const protectedRoutes = [
     {
         key: 'VirtualAnalyst',
         path: '/VirtualAnalyst',
-        component: lazy(() => import('@/views/virtualanalyst')),
+        component: lazy(() => import('@/views/virtualanalyst/VirtualAnalyst')),
         authority: [],
     },
     {

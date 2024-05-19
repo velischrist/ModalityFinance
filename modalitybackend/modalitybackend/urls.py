@@ -24,5 +24,5 @@ urlpatterns = [
     path('api/', include('myapp.urls'))
 ]
 
-# Allow viewing the files that have been uploaded
+# Allow viewing the files that have been uploaded 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

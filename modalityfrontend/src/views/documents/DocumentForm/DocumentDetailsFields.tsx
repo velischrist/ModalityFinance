@@ -93,12 +93,13 @@ const DocumentDetailsFields = (props: DocumentDetailsFieldsProps) => {
         setFieldValue,
     } = props
 
-    // const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = event.target.files?.[0] // Get the uploaded file
-    //     if (file) {
-    //         setFieldValue('file', file) // Set the file field value in Formik
-    //     }
-    // }
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0] // Get the uploaded file
+        console.log("file: " , file)
+        if (file) {
+            setFieldValue('file', file) // Set the file field value in Formik
+        }
+    }
 
     return (
         <AdaptableCard divider className="mb-4">
@@ -148,10 +149,10 @@ const DocumentDetailsFields = (props: DocumentDetailsFieldsProps) => {
                 invalid={errors.file ? true : false}
                 errorMessage={errors.file ? errors.file : undefined} // Use optional chaining to access error message
             >
-                {/* <input
+                <input
                     type="file"
                     onChange={handleFileUpload} // Call handleFileUpload function on file selection
-                /> */}
+                />
 
                 <Field name="file" component={FileFormItem}></Field>
             </FormItem>

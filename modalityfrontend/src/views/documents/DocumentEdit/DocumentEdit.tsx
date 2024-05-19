@@ -24,6 +24,8 @@ import DocumentForm, {
     OnDeleteCallback,
 } from '@/views/documents/DocumentForm'
 import isEmpty from 'lodash/isEmpty'
+import { companiesData } from '@/mock/data/salesData'
+import companyEditSlice from '@/views/companies/CompanyEdit/store/companyEditSlice'
 
 // const { TabNav, TabList, TabContent } = Tabs
 
@@ -115,6 +117,7 @@ const DocumentEdit = () => {
                                 onFormSubmit={handleFormSubmit}
                                 onDiscard={handleDiscard}
                                 onDelete={handleDelete}
+                                companyid={documentData.companyid}
                             />
                         </div>
                     </>

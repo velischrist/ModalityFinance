@@ -10,6 +10,7 @@ import { companiesData } from '@/mock/data/salesData'
 import companyEditSlice from '@/views/companies/CompanyEdit/store/companyEditSlice'
 import companyListSlice from '@/views/companies/CompanyList/store/companyListSlice'
 import { useParams } from 'react-router-dom';
+import { Blob } from 'buffer'
 
 // const { companyid } = useParams();
 
@@ -28,8 +29,25 @@ const DocumentNew = () => {
     }
 
     const addDocument = async (data: FormModel) => {
-        const response = await apiCreateSalesDocument<boolean, FormModel>(data)
-        return response.data
+        const formData = new FormData();
+        formData.append('documentname', data.documentname || '');
+        console.log("testing")
+        console.log("file: ", data.file)
+        console.log("documentpath: ", data.documentpath)
+        console.log("name: ", data.documentname)
+        if (data.file) {
+            console.log("hooray")
+            formData.append('documentpath', data.file); // Ensure documentpath is a File
+        }
+        formData.append('companyid', String(data.companyid));
+        formData.append('type', data.type || '');
+        formData.append('status', data.status || '');
+
+        const response = await apiCreateSalesDocument<boolean, FormData>(formData);
+        return response.data;
+        
+        // const response = await apiCreateSalesDocument<boolean, FormModel>(data)
+        // return response.data
     }
 
     const handleFormSubmit = async (

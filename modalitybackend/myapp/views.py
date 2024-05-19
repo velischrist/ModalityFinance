@@ -7,6 +7,14 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from openai import OpenAI
+from rest_framework.parsers import MultiPartParser, FormParser
+from .retrieval import retrieve_most_similar_document
+from .helperfunctions import extract_text_from_pdf
+
+
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
@@ -43,6 +51,8 @@ class ReportDocViewSet(viewsets.ModelViewSet):
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+    parser_classes = (MultiPartParser, FormParser)  # Add this line to enable file uploads
+
 
 @api_view(['POST'])
 def get_companies_paginated(request):
@@ -126,3 +136,25 @@ def get_documents_paginated(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+
+@api_view(['POST'])
+def respond(request):
+    if 'message' not in request.data:
+        return Response({'error': 'Invalid input'}, status=status.HTTP_400_BAD_REQUEST)
+
+    message = request.data['message']
+    document_path, _ = retrieve_most_similar_document(message)
+    document_content = extract_text_from_pdf(document_path.path)
+    print(document_path.path)
+    client = OpenAI()
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": f"Context: {document_content} \n\n Based on the context provided above, answer the following question: {message}"}]
+        )
+
+        response_text = response.choices[0].message.content
+        return Response({'response': response_text})
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

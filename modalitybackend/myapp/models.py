@@ -1,4 +1,6 @@
 from django.db import models
+from .helperfunctions import generate_vector_embedding, extract_text_from_pdf
+import json
 
 
 class Company(models.Model):
@@ -100,7 +102,21 @@ class Document(models.Model):
     type = models.CharField(db_column='Type', max_length=100, blank=True, null=True)  # Field name made lowercase.
     status = models.CharField(db_column='Status', max_length=100, blank=True, null=True)  # Field name made lowercase.
     uploadedAt = models.DateTimeField(db_column='DateUploaded', auto_now_add=True)  # Field name made lowercase.
+    embedding = models.JSONField(db_column='Embedding', blank=True, null=True) 
 
     class Meta:
         managed = True
         db_table = 'documents'
+
+    def save(self, *args, **kwargs):
+        # Ensure the vector embedding is updated before saving
+        super().save(*args, **kwargs)
+        self.update_vector_embedding()
+        super().save(update_fields=['embedding'])
+
+    def update_vector_embedding(self):
+        if self.documentpath:
+            # Extract text from the PDF file
+            text_content = extract_text_from_pdf(self.documentpath.path)
+            embedding = generate_vector_embedding(text_content)
+            self.embedding = embedding.tolist()
