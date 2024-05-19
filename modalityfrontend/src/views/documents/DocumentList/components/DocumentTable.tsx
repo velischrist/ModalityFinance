@@ -51,6 +51,7 @@ const ActionColumn = ({ row }: { row: Document }) => {
 
     return (
         <div className="flex justify-end text-lg">
+            <button>Map</button>
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
