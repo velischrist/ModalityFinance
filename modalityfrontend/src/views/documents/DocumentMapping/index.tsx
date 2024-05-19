@@ -48,7 +48,56 @@ const DocumentMapping = () => {
                 closable={false}
                 height="100%"
             >
-                Drawer Content
+                <div className="flex">
+                    <div className=" flex-1 max-h-screen sticky top-0 overflow-y-auto p-4">
+                        {/* Left Side Content */}
+                        <p>
+                            Left side content. Scrollable if content overflows
+                            Left side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflowsLeft side content. Scrollable if content
+                            overflows.
+                        </p>
+                        {/* Add more content here to test scrolling */}
+                    </div>
+                    <div className="flex-1 w-1/2 h-full overflow-y-auto p-4">
+                        {/* Right Side Content */}
+                        <p>
+                            Right side content. Scrollable if content overflows.
+                        </p>
+                        {/* Add more content here to test scrolling */}
+                    </div>
+                </div>
             </Drawer>
         </div>
     )
