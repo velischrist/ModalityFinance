@@ -40,6 +40,6 @@ def extract_tables_to_json(pdf_path):
     return json_data
 
 # Example usage
-pdf_path = '/Users/velissarioschristodoulou/Documents/Github Repos/ModalityFinance/FY23-Q1-Combined-NIKE-Press-Release-Schedules-FINAL.pdf'
+pdf_path = '/Users/velissarioschristodoulou/Documents/Github Repos/ModalityFinance/modalitybackend/media/FY23-Q1-Combined-NIKE-Press-Release-Schedules-FINAL.pdf'
 json_output = extract_tables_to_json(pdf_path)
 display_json(json_output)
