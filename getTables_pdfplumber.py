@@ -13,7 +13,7 @@ def display_json(data):
             return
 
     # Print the JSON data formatted
-    print(json.dumps(data, indent=4, sort_keys=True))
+    print(json.dumps(data, indent=4, sort_keys=False))
 
 
 # The following function opens a PDF file, extracts tables from each page, 

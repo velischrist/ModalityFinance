@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
+import Button from '@/components/ui/Button'
+import Drawer from '@/components/ui/Drawer'
 import DataTable from '@/components/shared/DataTable'
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
@@ -49,9 +51,40 @@ const ActionColumn = ({ row }: { row: Document }) => {
         dispatch(setSelectedDocument(row.id))
     }
 
+    const [horizontalOpen, setHorizontalOpen] = useState(false)
+
+    const onHorizontalOpen = () => {
+        setHorizontalOpen(true)
+    }
+
+    const onDrawerClose = () => {
+        setHorizontalOpen(false)
+    }
+
+    const Title = (
+        <div className="flex justify-between items-center w-full">
+            <div>
+                <h4 className="mb-2">Document Mapping</h4>
+                <p>Map the document</p>
+            </div>
+            <div className="">
+                <Button
+                    className="ltr:mr-2 rtl:ml-2"
+                    variant="plain"
+                    onClick={() => onDrawerClose()}
+                >
+                    Cancel
+                </Button>
+                <Button variant="solid" onClick={() => onDrawerClose()}>
+                    Okay
+                </Button>
+            </div>
+        </div>
+    )
+
     return (
         <div className="flex justify-end text-lg">
-            <button>Map</button>
+            <Button variant="solid" size="sm" onClick={() => onHorizontalOpen()}>Map</Button>
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
@@ -64,6 +97,32 @@ const ActionColumn = ({ row }: { row: Document }) => {
             >
                 <HiOutlineTrash />
             </span>
+
+            <Drawer
+                title={Title}
+                onClose={onDrawerClose}
+                isOpen={horizontalOpen}
+                placement="bottom"
+                closable={false}
+                height="100%"
+            >
+                <div className="flex">
+                    <div className=" flex-1 max-h-screen sticky top-0 overflow-y-auto p-4">
+                        {/* Left Side Content */}
+                        <p>
+                            [Display data]
+                        </p>
+                        {/* Add more content here to test scrolling */}
+                    </div>
+                    <div className="flex-1 w-1/2 h-full overflow-y-auto p-4">
+                        {/* Right Side Content */}
+                        <p>
+                            [Display raw PDF file]
+                        </p>
+                        {/* Add more content here to test scrolling */}
+                    </div>
+                </div>
+            </Drawer>
         </div>
     )
 }

@@ -3,6 +3,8 @@ import Table from '@/components/ui/Table'
 import Input from '@/components/ui/Input'
 import InternalScroll from './LPformdialog'
 import { fetchLPs, LPs } from './data';  // Import the fetch function and type
+import { HiOutlinePencil } from 'react-icons/hi'
+import useThemeClass from '@/utils/hooks/useThemeClass'
 
 import {
     useReactTable,
@@ -101,15 +103,28 @@ const Filtering = () => {
         fetchData();
     }, []);
 
+    const { textTheme } = useThemeClass();
+
     const columns = useMemo<ColumnDef<LPs>[]>(
         () => [
             { header: 'LP Name', accessorKey: 'lpname' },
             { header: 'Location', accessorKey: 'location' },
             { header: 'Type', accessorKey: 'type'},
             { header: 'Total Invested', accessorKey: 'total_invested' },
-            // { header: 'Positions', accessorKey: 'positions' },
+            {
+                header: 'Actions',
+                accessorKey: 'actions',
+                cell: () => (
+                    <span
+                        className={`cursor-pointer p-2 hover:${textTheme}`}
+                        // onClick={null}
+                    >
+                        <HiOutlinePencil />
+                    </span>
+                )
+            }
         ],
-        [],
+        [textTheme],
     )
 
     const table = useReactTable({
@@ -138,11 +153,6 @@ const Filtering = () => {
 
     return (
         <>
-            {/* <div className="lg:flex items-center justify-between mb-4">
-                {' '}
-                <h3 className="mb-4 lg:mb-0">LPs</h3>
-            </div> */}
-
             <InternalScroll />
             <div className="flex flex-col lg:flex-row lg:items-center">
                 <DebouncedInput

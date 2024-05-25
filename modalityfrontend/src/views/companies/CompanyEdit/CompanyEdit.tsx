@@ -116,6 +116,10 @@ const CompanyEdit = () => {
                                     <TabNav value="tab1">
                                         Company Updates
                                     </TabNav>
+                                    <TabNav value="tab3">Agreements</TabNav>
+                                    <TabNav value="tab4">Communications</TabNav>
+                                    <TabNav value="tab5">Due Diligence Docs</TabNav>
+                                    <TabNav value="tab6">Instruments</TabNav>
                                     <TabNav value="tab2">Details</TabNav>
                                     {/* <TabNav value="tab3">Agreements</TabNav>
                     <TabNav value="tab4">Meeting Calls</TabNav>

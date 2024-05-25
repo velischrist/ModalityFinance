@@ -11,7 +11,7 @@ export type Funds = {
 export const data10: Funds[] = [
     {
         id: 1,
-        fund_name: 'AVC Equities',
+        fund_name: 'Fund 1',
         fund_size: '$20,000,000',
         fund_type: 'Equity',
         fund_status: 'Open',
@@ -20,7 +20,7 @@ export const data10: Funds[] = [
     },
     {
         id: 2,
-        fund_name: 'XYZ Capital',
+        fund_name: 'Fund 2',
         fund_size: '$50,000,000',
         fund_type: 'Credit',
         fund_status: 'Closed',
@@ -29,7 +29,7 @@ export const data10: Funds[] = [
     },
     {
         id: 3,
-        fund_name: 'ABC Ventures',
+        fund_name: 'Fund 3',
         fund_size: '$150,000,000',
         fund_type: 'Credit',
         fund_status: 'Open',
@@ -38,7 +38,7 @@ export const data10: Funds[] = [
     },
     {
         id: 4,
-        fund_name: 'DEF Investments',
+        fund_name: 'Fund 4',
         fund_size: '$75,000,000',
         fund_type: 'Credit',
         fund_status: 'Open',
@@ -47,7 +47,7 @@ export const data10: Funds[] = [
     },
     {
         id: 5,
-        fund_name: 'GHI Capital',
+        fund_name: 'Fund 5',
         fund_size: '$200,000,000',
         fund_type: 'Equity',
         fund_status: 'Open',
