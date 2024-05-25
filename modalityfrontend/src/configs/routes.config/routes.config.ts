@@ -37,6 +37,13 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/documents/DocumentMapping')),
         authority: [],
     },
+
+    {
+        key: 'mapping1',
+        path: '/mapping1',
+        component: lazy(() => import('@/views/documents/DocumentMapping1')),
+        authority: [],
+    },
     {
         key: 'VirtualAnalyst',
         path: '/VirtualAnalyst',

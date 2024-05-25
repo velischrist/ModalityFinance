@@ -84,7 +84,13 @@ const ActionColumn = ({ row }: { row: Document }) => {
 
     return (
         <div className="flex justify-end text-lg">
-            <Button variant="solid" size="sm" onClick={() => onHorizontalOpen()}>Map</Button>
+            <Button
+                variant="solid"
+                size="sm"
+                onClick={() => onHorizontalOpen()}
+            >
+                Map
+            </Button>
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
@@ -109,16 +115,12 @@ const ActionColumn = ({ row }: { row: Document }) => {
                 <div className="flex">
                     <div className=" flex-1 max-h-screen sticky top-0 overflow-y-auto p-4">
                         {/* Left Side Content */}
-                        <p>
-                            [Display data]
-                        </p>
+                        <p>[Display data]</p>
                         {/* Add more content here to test scrolling */}
                     </div>
                     <div className="flex-1 w-1/2 h-full overflow-y-auto p-4">
                         {/* Right Side Content */}
-                        <p>
-                            [Display raw PDF file]
-                        </p>
+                        <p>[Display raw PDF file]</p>
                         {/* Add more content here to test scrolling */}
                     </div>
                 </div>
