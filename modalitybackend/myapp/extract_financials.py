@@ -19,11 +19,12 @@ def extract_income_statement(pdf_file):
 
     # Create a prompt template for parsing income statement 
     template_string_income_statement = """ {report} \n
-    From the above report, extract the income statement. Return is as JSON ready to be saved in a SQL database. 
+    From the above report, extract the income statement. Return is as JSON ready to be saved in a SQL database. The 
+    format should be like '{Revenue: {Year 21: 500, Year 22: 1000}, COGS: {...}'. 
     """
     prompt_template_income_statement = ChatPromptTemplate.from_template(template=template_string_income_statement)
 
-    chat = ChatOpenAI(temperature=0.7)
+    chat = ChatOpenAI(model_name="gpt-4o", temperature=0.7)
     input_tables = prompt_template_income_statement.format_messages(report=text)
     output_tables = chat(input_tables)
     
