@@ -5,6 +5,10 @@ import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
 import DocumentTools from './components/DocumentTools'
 import PDFViewer from './components/PdfPreview'
+import { injectReducer } from '@/store'
+import reducer from '../store'
+
+injectReducer('pointList', reducer)
 
 const mapping1 = () => {
     // const filePath = `${process.env.PUBLIC_URL}/FY23_Q4_Consolidated_Financial_Statements.pdf` // Adjust the path to your PDF file
@@ -22,8 +26,8 @@ const mapping1 = () => {
     const Title = (
         <div className="flex justify-between items-center w-full">
             <div>
-                <h4 className="mb-2">Document Mapping</h4>
-                <p>Map the document</p>
+                <h4 className="mb-2">Document Analysis</h4>
+                {/* <p>Map the document</p> */}
             </div>
             <div className="">
                 <Button

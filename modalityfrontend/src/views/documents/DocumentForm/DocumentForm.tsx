@@ -38,7 +38,6 @@ export type FormModel = Omit<InitialData, 'tags'> & {
 
 export type SetSubmitting = (isSubmitting: boolean) => void
 
-
 export type OnDeleteCallback = React.Dispatch<React.SetStateAction<boolean>>
 
 type OnDelete = (callback: OnDeleteCallback) => void
@@ -49,7 +48,7 @@ type ProductForm = {
     onDiscard?: () => void
     onDelete?: OnDelete
     onFormSubmit: (formData: FormModel, setSubmitting: SetSubmitting) => void
-    companyid?: number;
+    companyid?: number
 }
 
 const { useUniqueId } = hooks
@@ -120,7 +119,7 @@ const ProductForm = forwardRef<FormikRef, ProductForm>((props, ref) => {
             uploadedAt: currentDate,
             documentpath: null,
             file: null,
-            companyid: props.companyid
+            companyid: props.companyid,
             // document: null,
         },
         onFormSubmit,

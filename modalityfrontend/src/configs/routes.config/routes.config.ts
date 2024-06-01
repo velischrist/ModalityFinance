@@ -22,7 +22,7 @@ export const protectedRoutes = [
     {
         key: 'reporting',
         path: '/reporting',
-        component: lazy(() => import('@/views/demo/reporting')),
+        component: lazy(() => import('@/views/reporting')),
         authority: [],
     },
     {
@@ -42,6 +42,12 @@ export const protectedRoutes = [
         key: 'mapping1',
         path: '/mapping1',
         component: lazy(() => import('@/views/documents/DocumentMapping1')),
+        authority: [],
+    },
+    {
+        key: 'companylevel',
+        path: '/companylevel',
+        component: lazy(() => import('@/views/companylevel')),
         authority: [],
     },
     {

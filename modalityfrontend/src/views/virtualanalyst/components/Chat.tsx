@@ -65,7 +65,7 @@ const ChatComponent: React.FC = () => {
             className="chat-container"
             style={{
                 width: '100%',
-                height: '100vh',
+                height: '71vh',
                 display: 'flex',
                 flexDirection: 'column',
                 padding: '20px',
@@ -79,6 +79,7 @@ const ChatComponent: React.FC = () => {
                     flex: '1',
                     overflowY: 'auto',
                     marginBottom: '20px',
+                    maxHeight: 'fit-content',
                     height: '100vh',
                 }}
             >
@@ -127,7 +128,7 @@ const ChatComponent: React.FC = () => {
                         padding: '10px 20px',
                         marginLeft: '10px',
                         borderRadius: '5px',
-                        backgroundColor: '#007bff',
+                        backgroundColor: 'rgb(15 24 42)',
                         color: '#fff',
                         border: 'none',
                     }}

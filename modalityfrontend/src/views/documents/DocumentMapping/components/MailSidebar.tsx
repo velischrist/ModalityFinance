@@ -75,7 +75,7 @@ const MailSideBarContent = () => {
             <div className="flex flex-col justify-between h-full">
                 <div>
                     <div className="my-8 mx-6">
-                        <h3></h3>
+                        <h3>iiii</h3>
                     </div>
                     <Menu variant="transparent" className="mx-2 mb-10">
                         {groupList.map((menu) => (

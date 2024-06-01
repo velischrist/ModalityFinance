@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { HiOutlinePencil, HiOutlineTrash, HiOutlineEye } from 'react-icons/hi'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
 import DataTable from '@/components/shared/DataTable'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
-import { FiPackage } from 'react-icons/fi'
+import DocumentTools from '../../DocumentMapping1/components/DocumentTools'
+import PDFViewer from '../../DocumentMapping1/components/PdfPreview'
 import {
     getDocuments,
     setTableData,
@@ -30,11 +31,10 @@ type Document = {
     uploadedAt: string
     status: string
     type: string
-    // companyid: number
 }
 
 type DocumentTableProps = {
-    companyid: number | undefined // Define the companyId prop type
+    companyid: number | undefined
 }
 
 const ActionColumn = ({ row }: { row: Document }) => {
@@ -64,19 +64,18 @@ const ActionColumn = ({ row }: { row: Document }) => {
     const Title = (
         <div className="flex justify-between items-center w-full">
             <div>
-                <h4 className="mb-2">Document Mapping</h4>
-                <p>Map the document</p>
+                <h4 className="mb-2">Document Analysis</h4>
             </div>
             <div className="">
-                <Button
+                {/* <Button
                     className="ltr:mr-2 rtl:ml-2"
                     variant="plain"
                     onClick={() => onDrawerClose()}
                 >
                     Cancel
-                </Button>
+                </Button> */}
                 <Button variant="solid" onClick={() => onDrawerClose()}>
-                    Okay
+                    Close
                 </Button>
             </div>
         </div>
@@ -84,13 +83,12 @@ const ActionColumn = ({ row }: { row: Document }) => {
 
     return (
         <div className="flex justify-end text-lg">
-            <Button
-                variant="solid"
-                size="sm"
+            <span
+                className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={() => onHorizontalOpen()}
             >
-                Map
-            </Button>
+                <HiOutlineEye />
+            </span>
             <span
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
@@ -113,15 +111,11 @@ const ActionColumn = ({ row }: { row: Document }) => {
                 height="100%"
             >
                 <div className="flex">
-                    <div className=" flex-1 max-h-screen sticky top-0 overflow-y-auto p-4">
-                        {/* Left Side Content */}
-                        <p>[Display data]</p>
-                        {/* Add more content here to test scrolling */}
+                    <div className="flex-1 max-h-screen sticky top-0 overflow-y-auto p-4 flex-col min-w-[360px] ltr:border-r rtl:border-l border-gray-200 dark:border-gray-600 ">
+                        <DocumentTools />
                     </div>
                     <div className="flex-1 w-1/2 h-full overflow-y-auto p-4">
-                        {/* Right Side Content */}
-                        <p>[Display raw PDF file]</p>
-                        {/* Add more content here to test scrolling */}
+                        <PDFViewer />
                     </div>
                 </div>
             </Drawer>
@@ -130,21 +124,23 @@ const ActionColumn = ({ row }: { row: Document }) => {
 }
 
 const DocumentColumn = ({ row }: { row: Document }) => {
-    // const avatar = row.img ? (
-    //     <Avatar src={row.img} />
-    // ) : (
-    //     <Avatar icon={<FiPackage />} />
-    // )
-
     return (
         <div className="flex items-center">
-            {/* {avatar} */}
-            <span className={`ml-2 rtl:mr-2 font-semibold`}>
-                {row.documentname}
-            </span>
+            <div
+                className="flex items-center justify-center bg-gray-200 p-1 rounded"
+                style={{ width: '24px', height: '24px' }}
+            >
+                <img
+                    src="/img/avatars/pdf-icon.69d008c4.svg"
+                    alt="PDF Icon"
+                    style={{ width: '100%', height: '100%' }}
+                />
+            </div>
+            <span className="ml-2 font-semibold">{row.documentname}</span>
         </div>
     )
 }
+
 const DocumentTable: React.FC<DocumentTableProps> = ({ companyid }) => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
@@ -202,32 +198,9 @@ const DocumentTable: React.FC<DocumentTableProps> = ({ companyid }) => {
                 accessorKey: 'documentname',
                 cell: (props) => {
                     const row = props.row.original
-
                     return <DocumentColumn row={row} />
                 },
             },
-            // {
-            //     header: 'Status',
-            //     accessorKey: 'status',
-            //     cell: (props) => {
-            //         const { status } = props.row.original
-
-            //         return (
-            //             <div className="flex items-center gap-2">
-            //                 <Badge
-            //                     className={
-            //                         inventoryStatusColor[status].dotClass
-            //                     }
-            //                 />
-            //                 <span
-            //                     className={`capitalize font-semibold ${inventoryStatusColor[status].textClass}`}
-            //                 >
-            //                     {inventoryStatusColor[status].label}
-            //                 </span>
-            //             </div>
-            //         )
-            //     },
-            // },
             {
                 header: 'Type',
                 accessorKey: 'type',
@@ -244,14 +217,6 @@ const DocumentTable: React.FC<DocumentTableProps> = ({ companyid }) => {
                     return <span className="capitalize">{row.status}</span>
                 },
             },
-            // {
-            //     header: 'Status',
-            //     accessorKey: 'status',
-            //     cell: (props) => {
-            //         const row = props.row.original
-            //         return <span className="capitalize">{row.status}</span>
-            //     },
-            // },
             {
                 header: 'Uploaded At',
                 accessorKey: 'uploadedAt',
@@ -260,23 +225,6 @@ const DocumentTable: React.FC<DocumentTableProps> = ({ companyid }) => {
                     return <span className="capitalize">{row.uploadedAt}</span>
                 },
             },
-            // {
-            //     header: 'Invested At',
-            //     accessorKey: 'investedAt',
-            //     cell: (props) => {
-            //         const row = props.row.original
-            //         return <span className="capitalize">{row.investedAt}</span>
-            //     },
-            // },
-
-            // {
-            //     header: 'Amount Invested',
-            //     accessorKey: 'amountInvested',
-            //     cell: (props) => {
-            //         const { amountInvested } = props.row.original
-            //         return <span>${amountInvested}</span>
-            //     },
-            // },
             {
                 header: '',
                 id: 'action',

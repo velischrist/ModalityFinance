@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import Avatar from '@/components/ui/Avatar'
-import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
-import { FiPackage } from 'react-icons/fi'
+import { HiOutlineEye, HiOutlineTrash } from 'react-icons/hi'
 import {
     getCompanies,
     setTableData,
@@ -29,6 +27,25 @@ type Company = {
     industry: string
 }
 
+const getInitials = (name: string) => {
+    return name.charAt(0).toUpperCase() + '.'
+}
+
+const getRandomColorClass = () => {
+    const colors = [
+        'bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100',
+        // 'bg-emerald-500 text-white',
+        // 'bg-blue-500 text-white',
+        // 'bg-red-500 text-white',
+        // 'bg-yellow-500 text-white',
+        // 'bg-purple-500 text-white',
+        // 'bg-pink-500 text-white',
+        // 'bg-teal-500 text-white',
+    ]
+    const colorClass = colors[Math.floor(Math.random() * colors.length)]
+    return colorClass
+}
+
 const ActionColumn = ({ row }: { row: Company }) => {
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
@@ -49,7 +66,7 @@ const ActionColumn = ({ row }: { row: Company }) => {
                 className={`cursor-pointer p-2 hover:${textTheme}`}
                 onClick={onEdit}
             >
-                <HiOutlinePencil />
+                <HiOutlineEye />
             </span>
             <span
                 className="cursor-pointer p-2 hover:text-red-500"
@@ -62,15 +79,13 @@ const ActionColumn = ({ row }: { row: Company }) => {
 }
 
 const CompanyColumn = ({ row }: { row: Company }) => {
-    // const avatar = row.img ? (
-    //     <Avatar src={row.img} />
-    // ) : (
-    //     <Avatar icon={<FiPackage />} />
-    // )
+    const initials = getInitials(row.companyname)
+    const colorClass =
+        'bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100'
 
     return (
         <div className="flex items-center">
-            {/* {avatar} */}
+            <Avatar className={`mr-4 ${colorClass}`}>{initials}</Avatar>
             <span className={`ml-2 rtl:mr-2 font-semibold`}>
                 {row.companyname}
             </span>
