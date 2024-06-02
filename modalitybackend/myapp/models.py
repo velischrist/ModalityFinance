@@ -111,11 +111,10 @@ class Document(models.Model):
         db_table = 'documents'
 
     def save(self, *args, **kwargs):
-        # Ensure the vector embedding is updated before saving
-        self.update_vector_embedding()
-        super().save(*args, **kwargs)
-        self.process_financial_document()
-        super().save(update_fields=['embedding', 'status'])
+        super().save(*args, **kwargs)  # Save the document first to ensure file is uploaded
+        self.update_vector_embedding()  # Process the embedding
+        self.process_financial_document()  # Process the document
+        super().save(update_fields=['embedding', 'status'])  # Save the updated fields
 
     def process_financial_document(self):
         if self.documentpath:
@@ -124,8 +123,8 @@ class Document(models.Model):
 
             # Save to MongoDB
             for json_obj in extracted_json_objects:
-                json_obj["documentid": self.id]
-                json_obj["companyid": self.companyid]
+                json_obj["documentid"] = self.id
+                json_obj["companyid"] = self.companyid.companyid
                 financial_statements.insert_one(json_obj)
                 print("Data saved successfully:", json_obj)
 
