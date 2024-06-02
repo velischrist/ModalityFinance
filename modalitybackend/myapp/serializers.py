@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc, Document
+from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc, Document, FinancialStatement
+from .mongodb import financial_statements
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,3 +54,45 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = '__all__'
+
+
+class FinancialStatementSerializer(serializers.Serializer):
+    company_name = serializers.CharField()
+    report_date = serializers.DateField()
+    period_end_date = serializers.DateField()
+    statement_type = serializers.CharField()
+    statement_reporting_period = serializers.CharField()
+    number_reporting = serializers.CharField()
+    data = serializers.JSONField()
+
+    def create(self, validated_data):
+        print(validated_data)
+        collection = financial_statements
+        result = collection.insert_one(validated_data)
+        validated_data['_id'] = str(result.inserted_id)
+        return validated_data
+
+    def update(self, instance, validated_data):
+        print(validated_data)
+        collection = financial_statements
+        collection.update_one({"_id": instance["_id"]}, {"$set": validated_data})
+        validated_data['_id'] = instance["_id"]
+        return validated_data
+
+    def to_representation(self, instance):
+        # Ensure that the ObjectId is converted to a string
+        instance["_id"] = str(instance["_id"])
+        return instance
+
+    def to_internal_value(self, data):
+        # Map incoming JSON keys to the internal representation
+        internal_data = {
+            'company_name': data.get('Company Name'),
+            'report_date': data.get('Report Date'),
+            'period_end_date': data.get('Period End Date'),
+            'statement_type': data.get('Statement Type'),
+            'statement_reporting_period': data.get('Statement Reporting Period'),
+            'number_reporting': data.get('Number reporting'),
+            'data': data.get('Data')
+        }
+        return internal_data

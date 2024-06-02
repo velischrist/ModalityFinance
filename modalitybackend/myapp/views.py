@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Company, Fund, Lp, Fundraise, Investment, Agreement, FinancialDoc, ReportDoc, Document
-from .serializers import CompanySerializer, FundSerializer, LpSerializer, FundraiseSerializer, InvestmentSerializer, AgreementSerializer, FinancialDocSerializer, ReportDocSerializer, DocumentSerializer
+from .serializers import CompanySerializer, FundSerializer, LpSerializer, FundraiseSerializer, InvestmentSerializer, AgreementSerializer, FinancialDocSerializer, ReportDocSerializer, DocumentSerializer, FinancialStatementSerializer
 from .helperfunctions import paginate, wild_card_search
 from django.views.decorators.http import require_http_methods
 import json
@@ -13,8 +13,10 @@ from openai import OpenAI
 from rest_framework.parsers import MultiPartParser, FormParser
 from .retrieval import retrieve_most_similar_document
 from .helperfunctions import extract_text_from_pdf
-
-
+from .mongodb import financial_statements
+from django.shortcuts import render
+from rest_framework import generics
+from bson import ObjectId
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
@@ -158,3 +160,32 @@ def respond(request):
         return Response({'response': response_text})
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# MongoDB setup
+collection = financial_statements
+
+class FinancialStatementList(generics.ListCreateAPIView):
+    serializer_class = FinancialStatementSerializer
+
+    def get_queryset(self):
+        return list(collection.find())
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class FinancialStatementDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = FinancialStatementSerializer
+
+    def get_object(self):
+        obj_id = self.kwargs["pk"]
+        obj = collection.find_one({"_id": ObjectId(obj_id)})
+        if obj:
+            obj["_id"] = str(obj["_id"])
+        return obj
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        collection.delete_one({"_id": ObjectId(self.kwargs["pk"])})

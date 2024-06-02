@@ -1,6 +1,8 @@
 from django.db import models
 from .helperfunctions import generate_vector_embedding, extract_text_from_pdf
 import json
+from .mongodb import financial_statements
+from .extract_financials import extract_financial_statements
 
 
 class Company(models.Model):
@@ -110,9 +112,25 @@ class Document(models.Model):
 
     def save(self, *args, **kwargs):
         # Ensure the vector embedding is updated before saving
-        super().save(*args, **kwargs)
         self.update_vector_embedding()
-        super().save(update_fields=['embedding'])
+        super().save(*args, **kwargs)
+        self.process_financial_document()
+        super().save(update_fields=['embedding', 'status'])
+
+    def process_financial_document(self):
+        if self.documentpath:
+            # Extract financial statements
+            extracted_json_objects = extract_financial_statements(self.documentpath.path)
+
+            # Save to MongoDB
+            for json_obj in extracted_json_objects:
+                json_obj["documentid": self.id]
+                json_obj["companyid": self.companyid]
+                financial_statements.insert_one(json_obj)
+                print("Data saved successfully:", json_obj)
+
+            # Mark the document as processed (optional)
+            self.status = 'Processed'
 
     def update_vector_embedding(self):
         if self.documentpath:
@@ -121,45 +139,15 @@ class Document(models.Model):
             embedding = generate_vector_embedding(text_content)
             self.embedding = embedding.tolist()
 
-class IncomeStatement(models.Model):
-    statement_id = models.AutoField(primary_key=True)  
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    fiscal_year = models.IntegerField()
-    fiscal_quarter = models.IntegerField(null=True, blank=True)
-    reporting_currency = models.CharField(max_length=10)
-
-    total_revenue = models.DecimalField(max_digits=20, decimal_places=2)
-    cost_of_goods_sold = models.DecimalField(max_digits=20, decimal_places=2)
-    gross_profit = models.DecimalField(max_digits=20, decimal_places=2)
-
-    research_and_development_expenses = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    selling_general_administrative_expenses = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    depreciation_and_amortization = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    other_operating_expenses = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    total_operating_expenses = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    operating_income = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-
-    interest_income = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    interest_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    other_non_operating_income = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    total_non_operating_income = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    total_non_operating_expenses = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    income_before_tax = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-
-    income_tax_expense = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    net_income_from_continuing_operations = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-
-    income_from_discontinued_operations = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    net_income = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-
-    earnings_per_share_basic = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    earnings_per_share_diluted = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class FinancialStatement(models.Model):
+    company_name = models.CharField(max_length=255)
+    report_date = models.CharField(max_length=255)
+    period_end_date = models.CharField(max_length=255)
+    statement_type = models.CharField(max_length=255)
+    statement_reporting_period = models.CharField(max_length=250)
+    number_reporting = models.CharField(max_length=250)
+    data = models.JSONField()
 
     class Meta:
-        indexes = [
-            models.Index(fields=['company', 'fiscal_year']),
-            models.Index(fields=['fiscal_year']),
-        ]
+        managed = False  # No migrations will be created for this model
+        db_table = 'financial_statements'
