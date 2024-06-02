@@ -940,7 +940,7 @@ const CollapsibleCard: React.FC<{
     )
 }
 
-const ExtractionTable: React.FC = () => {
+const ExtractionTable1: React.FC = () => {
     return (
         <div className="mb-6">
             <ExtractionGrid />
@@ -948,4 +948,4 @@ const ExtractionTable: React.FC = () => {
     )
 }
 
-export default ExtractionTable
+export default ExtractionTable1

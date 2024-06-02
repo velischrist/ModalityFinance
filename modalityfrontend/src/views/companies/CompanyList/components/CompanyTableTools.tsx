@@ -19,14 +19,6 @@ const CompanyTableTools = () => {
                     Export
                 </Button> */}
             </Link>
-            <Link
-                className="block lg:inline-block md:mb-0 mb-4"
-                to="/app/companies/company-new"
-            >
-                <Button block variant="solid" size="sm" icon={<HiPlusCircle />}>
-                    Add Company
-                </Button>
-            </Link>
         </div>
     )
 }
