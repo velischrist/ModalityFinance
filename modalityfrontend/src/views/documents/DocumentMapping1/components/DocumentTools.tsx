@@ -1,3 +1,4 @@
+import React from 'react'
 import Tabs from '@/components/ui/Tabs'
 import {
     HiOutlineStar,
@@ -12,7 +13,20 @@ import ChatComponent from '@/views/virtualanalyst/components/Chat'
 
 const { TabNav, TabList, TabContent } = Tabs
 
-const DocumentTools = () => {
+type DocumentToolsProps = {
+    document: {
+        id: number
+        documentname: string
+        documentpath?: string
+        companyid: number
+    }
+    companyid: number
+}
+
+const DocumentTools: React.FC<DocumentToolsProps> = ({
+    document,
+    companyid,
+}) => {
     return (
         <div>
             <Tabs defaultValue="tab1">
@@ -32,24 +46,28 @@ const DocumentTools = () => {
                 </TabList>
                 <div className="p-4">
                     <TabContent value="tab1">
-                        <PointListContent />
-                        {/* <Highlights /> */}
+                        <PointListContent
+                        // document={document}
+                        // companyid={companyid}
+                        />
                     </TabContent>
                     <TabContent value="tab2">
-                        <ExtractionTable />
-                        {/* <ExtractionTable /> */}
+                        <ExtractionTable
+                        // document={document}
+                        // companyid={companyid}
+                        />
                     </TabContent>
                     <TabContent value="tab3">
-                        <ExtractionTable1 />
-                        {/* <ExtractionTable /> */}
+                        <ExtractionTable1
+                        // document={document}
+                        // companyid={companyid}
+                        />
                     </TabContent>
-                    {/* <TabContent value="tab3">
-                        {/* <ExtractionTable /> */}
-                    {/* <ExtractionTable /> */}
-                    {/* </TabContent> */}
                     <TabContent value="tab4">
-                        <ChatComponent />
-                        {/* <ExtractionTable /> */}
+                        <ChatComponent
+                        // document={document}
+                        // companyid={companyid}
+                        />
                     </TabContent>
                 </div>
             </Tabs>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { HiOutlinePencil, HiOutlineTrash, HiOutlineEye } from 'react-icons/hi'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
@@ -31,13 +31,21 @@ type Document = {
     uploadedAt: string
     status: string
     type: string
+    documentpath?: string
+    companyid: number
 }
 
 type DocumentTableProps = {
-    companyid: number | undefined
+    companyid: number
 }
 
-const ActionColumn = ({ row }: { row: Document }) => {
+const ActionColumn = ({
+    row,
+    companyid,
+}: {
+    row: Document
+    companyid: number
+}) => {
     const dispatch = useAppDispatch()
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
@@ -67,13 +75,6 @@ const ActionColumn = ({ row }: { row: Document }) => {
                 <h4 className="mb-2">Document Analysis</h4>
             </div>
             <div className="">
-                {/* <Button
-                    className="ltr:mr-2 rtl:ml-2"
-                    variant="plain"
-                    onClick={() => onDrawerClose()}
-                >
-                    Cancel
-                </Button> */}
                 <Button variant="solid" onClick={() => onDrawerClose()}>
                     Close
                 </Button>
@@ -112,10 +113,10 @@ const ActionColumn = ({ row }: { row: Document }) => {
             >
                 <div className="flex">
                     <div className="flex-1 max-h-screen sticky top-0 overflow-y-auto p-4 flex-col min-w-[360px] ltr:border-r rtl:border-l border-gray-200 dark:border-gray-600 ">
-                        <DocumentTools />
+                        <DocumentTools document={row} companyid={companyid} />
                     </div>
                     <div className="flex-1 w-1/2 h-full overflow-y-auto p-4">
-                        <PDFViewer />
+                        <PDFViewer document={row} companyid={companyid} />
                     </div>
                 </div>
             </Drawer>
@@ -228,7 +229,12 @@ const DocumentTable: React.FC<DocumentTableProps> = ({ companyid }) => {
             {
                 header: '',
                 id: 'action',
-                cell: (props) => <ActionColumn row={props.row.original} />,
+                cell: (props) => (
+                    <ActionColumn
+                        row={props.row.original}
+                        companyid={companyid}
+                    />
+                ),
             },
         ],
         [],

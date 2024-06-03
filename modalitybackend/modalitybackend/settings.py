@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'modality',
         'USER': 'root',
-        'PASSWORD': 'Niovis29!Niovis29!',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -140,3 +140,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CORS_ALLOWED_ORIGINS = [
 #     'http://localhost:3000',  # Adjust the port if your frontend is served on a different one
 # ]
+
+X_FRAME_OPTIONS = "ALLOWALL"
